@@ -32,3 +32,4 @@ const renderScreen = (screenIndex) => {
 
 getScreenIds();
 getScreenTemplates();
+renderScreen(1);
