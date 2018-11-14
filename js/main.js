@@ -10,6 +10,25 @@ const KeyCode = {
   RIGHT_ARROW: 39
 };
 
+const screenControlsTemplate = `<div class="arrows__wrap">
+  <style>
+    .arrows__wrap {
+      position: absolute;
+      top: 95px;
+      left: 50%;
+      margin-left: -56px;
+    }
+    .arrows__btn {
+      background: none;
+      border: 2px solid black;
+      padding: 5px 20px;
+    }
+  </style>
+  <button class="arrows__btn arrows__btn--prev"><-</button>
+  <button class="arrows__btn arrows__btn--next">-></button>
+</div>
+`;
+
 let currentScreenIndex = 0;
 
 const getScreenIds = () => {
@@ -71,8 +90,30 @@ const onDocumentArrowKeyUp = (evt) => {
   isRightArrowKeyup(evt, renderNextScreen);
 };
 
+const addScreenSwitcher = () => {
+  const screenControls = document.createElement(`div`);
+  screenControls.innerHTML = screenControlsTemplate;
+  document.body.appendChild(screenControls);
+  const controlPrev = document.querySelector(`.arrows__btn--prev`);
+  const controlNext = document.querySelector(`.arrows__btn--next`);
+  controlPrev.addEventListener(`click`, onScreenPrevClick);
+  controlNext.addEventListener(`click`, onScreenNextClick);
+};
+
+const onScreenPrevClick = (evt) => {
+  evt.preventDefault();
+  renderPreviousScreen();
+};
+
+const onScreenNextClick = (evt) => {
+  evt.preventDefault();
+  renderNextScreen();
+};
+
 getScreenIds();
 getScreenTemplates();
 renderScreen(1);
 
 document.addEventListener(`keyup`, onDocumentArrowKeyUp);
+
+addScreenSwitcher();
