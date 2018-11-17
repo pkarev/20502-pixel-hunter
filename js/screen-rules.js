@@ -1,4 +1,7 @@
 import createDomElementFromStringTemplate from './create-dom-element';
+import renderScreen from './render-screen';
+import gameTwoImageScreenElement from './screen-game-two-images';
+import {debounce, onGoHomeClick} from "./util";
 
 const rulesScreenTemplate = `
   <header class="header">
@@ -31,5 +34,33 @@ const rulesScreenTemplate = `
 `;
 
 const rulesScreenElement = createDomElementFromStringTemplate(rulesScreenTemplate);
+const rulesScreenNext = rulesScreenElement.querySelector(`.rules__button`);
+const playerName = rulesScreenElement.querySelector(`.rules__input`);
+const back = rulesScreenElement.querySelector(`.back`);
+
+const onPlayerNameInput = debounce((evt) => {
+  if (evt.target.value) {
+    enableRulesScreenNext();
+  } else {
+    disableRulesScreenNext();
+  }
+}, 300);
+
+const enableRulesScreenNext = () => {
+  rulesScreenNext.disabled = false;
+};
+
+const disableRulesScreenNext = () => {
+  rulesScreenNext.disabled = true;
+};
+
+const onRulesScreenNextClick = (evt) => {
+  evt.preventDefault();
+  renderScreen(gameTwoImageScreenElement);
+};
+
+playerName.addEventListener(`input`, onPlayerNameInput);
+rulesScreenNext.addEventListener(`click`, onRulesScreenNextClick);
+back.addEventListener(`click`, onGoHomeClick);
 
 export default rulesScreenElement;
