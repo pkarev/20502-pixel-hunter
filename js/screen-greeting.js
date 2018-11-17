@@ -1,4 +1,6 @@
 import createDomElementFromStringTemplate from './create-dom-element';
+import renderScreen from "./render-screen";
+import rulesScreenElement from "./screen-rules";
 
 const greetingScreenTemplate = `
 <section class="greeting central--blur">
@@ -24,5 +26,13 @@ const greetingScreenTemplate = `
 `;
 
 const greetingScreenElement = createDomElementFromStringTemplate(greetingScreenTemplate);
+const greetingScreenNext = greetingScreenElement.querySelector(`.greeting__continue`);
+
+const onGreetingScreenNextClick = (evt) => {
+  evt.preventDefault();
+  renderScreen(rulesScreenElement);
+};
+
+greetingScreenNext.addEventListener(`click`, onGreetingScreenNextClick);
 
 export default greetingScreenElement;
