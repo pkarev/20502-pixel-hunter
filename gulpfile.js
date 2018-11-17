@@ -7,9 +7,11 @@ const plumber = require(`gulp-plumber`);
 const postcss = require(`gulp-postcss`);
 const autoprefixer = require(`autoprefixer`);
 const server = require(`browser-sync`).create();
+const sourcemaps = require(`gulp-sourcemaps`);
 const mqpacker = require(`css-mqpacker`);
 const minify = require(`gulp-csso`);
 const rename = require(`gulp-rename`);
+const rollup = require(`gulp-better-rollup`);
 const imagemin = require(`gulp-imagemin`);
 const svgstore = require(`gulp-svgstore`);
 
@@ -46,8 +48,11 @@ gulp.task(`sprite`, () => {
 });
 
 gulp.task(`scripts`, () => {
-  return gulp.src(`js/**/*.js`).
+  return gulp.src(`js/main.js`).
     pipe(plumber()).
+    pipe(sourcemaps.init()).
+    pipe(rollup({}, `iife`)).
+    pipe(sourcemaps.write(``)).
     pipe(gulp.dest(`build/js/`));
 });
 
