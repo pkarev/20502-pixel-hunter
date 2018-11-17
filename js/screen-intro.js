@@ -1,4 +1,6 @@
 import createDomElementFromStringTemplate from './create-dom-element';
+import renderScreen from "./render-screen";
+import greetingScreenElement from "./screen-greeting";
 
 const introScreenTemplate = `
 <section class="intro">
@@ -8,5 +10,14 @@ const introScreenTemplate = `
 `;
 
 const introScreenElement = createDomElementFromStringTemplate(introScreenTemplate);
+const introScreenNext = introScreenElement.querySelector(`.asterisk`);
+
+const onIntroScreenNextClick = (evt) => {
+  evt.preventDefault();
+
+  renderScreen(greetingScreenElement);
+};
+
+introScreenNext.addEventListener(`click`, onIntroScreenNextClick);
 
 export default introScreenElement;
