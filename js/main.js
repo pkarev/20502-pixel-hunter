@@ -1,5 +1,3 @@
-'use strict';
-
 const templatesNodeList = document.querySelectorAll(`template`);
 const screenIds = [];
 const screens = [];
