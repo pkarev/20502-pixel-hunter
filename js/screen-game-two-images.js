@@ -1,4 +1,7 @@
 import createDomElementFromStringTemplate from "./create-dom-element";
+import renderScreen from "./render-screen";
+import gameOneImageScreenElement from "./screen-game-one-image";
+import {onGoHomeClick, validateFields} from "./util";
 
 const gameTwoImagesScreenTemplate = `
 <header class="header">
@@ -60,5 +63,18 @@ const gameTwoImagesScreenTemplate = `
 `;
 
 const gameTwoImageScreenElement = createDomElementFromStringTemplate(gameTwoImagesScreenTemplate);
+const gameFormAnswers = Array.from(gameTwoImageScreenElement.querySelectorAll(`input`));
+const back = gameTwoImageScreenElement.querySelector(`.back`);
+
+gameFormAnswers.forEach((answer) => {
+  answer.addEventListener(`change`, () => {
+    let isFormValid = validateFields(gameFormAnswers);
+    if (!isFormValid) {
+      return;
+    }
+    renderScreen(gameOneImageScreenElement);
+  });
+});
+back.addEventListener(`click`, onGoHomeClick);
 
 export default gameTwoImageScreenElement;

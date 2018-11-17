@@ -14,8 +14,17 @@ const debounce = (fun, debounceInterval) => {
   };
 };
 
+const validateFields = (formFields) => {
+  let isAllFieldsValid = true;
+  formFields.forEach((formField) => {
+    isAllFieldsValid = formField.checkValidity() ? isAllFieldsValid : formField.checkValidity();
+  });
+
+  return isAllFieldsValid;
+};
+
 const onGoHomeClick = () => {
   renderScreen(introScreenElement);
 };
 
-export {debounce, onGoHomeClick};
+export {debounce, validateFields, onGoHomeClick};
