@@ -1,4 +1,7 @@
 import createDomElementFromStringTemplate from "./create-dom-element";
+import renderScreen from "./render-screen";
+import statsScreenElement from "./screen-stats";
+import {onGoHomeClick} from "./util";
 
 const gameThreeImagesScreenTemplate = `
 <header class="header">
@@ -46,6 +49,23 @@ const gameThreeImagesScreenTemplate = `
 </section>
 `;
 
+const ANSWER_CLASS_NAME = `game__option`;
+
 const gameThreeImageScreenElement = createDomElementFromStringTemplate(gameThreeImagesScreenTemplate);
+const gameForm = gameThreeImageScreenElement.querySelector(`.game__content`);
+const back = gameThreeImageScreenElement.querySelector(`.back`);
+
+const onGameFormClick = (evt) => {
+  let target = evt.target;
+  while (target !== gameForm) {
+    if (target.classList.contains(ANSWER_CLASS_NAME)) {
+      renderScreen(statsScreenElement);
+    }
+    target = target.parentNode;
+  }
+};
+
+gameForm.addEventListener(`click`, onGameFormClick);
+back.addEventListener(`click`, onGoHomeClick);
 
 export default gameThreeImageScreenElement;
