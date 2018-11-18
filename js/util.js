@@ -1,6 +1,3 @@
-import renderScreen from "./render-screen";
-import introScreenElement from "./screen-intro";
-
 const debounce = (fun, debounceInterval) => {
   let lastTimeout = null;
 
@@ -23,8 +20,4 @@ const validateFields = (formFields) => {
   return isAllFieldsValid;
 };
 
-const onGoHomeClick = () => {
-  renderScreen(introScreenElement);
-};
-
-export {debounce, validateFields, onGoHomeClick};
+export {debounce, validateFields};

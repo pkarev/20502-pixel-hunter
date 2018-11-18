@@ -1,5 +1,5 @@
 import createDomElementFromStringTemplate from "./create-dom-element";
-import {onGoHomeClick} from "./util";
+import activateGoHomeButton from "./go-home";
 
 const statsScreenTemplate = `
 <header class="header">
@@ -116,8 +116,6 @@ const statsScreenTemplate = `
 `;
 
 const statsScreenElement = createDomElementFromStringTemplate(statsScreenTemplate);
-const back = statsScreenElement.querySelector(`.back`);
-
-back.addEventListener(`click`, onGoHomeClick);
+activateGoHomeButton(statsScreenElement);
 
 export default statsScreenElement;

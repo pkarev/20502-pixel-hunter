@@ -1,7 +1,7 @@
 import createDomElementFromStringTemplate from "./create-dom-element";
 import renderScreen from "./render-screen";
 import statsScreenElement from "./screen-stats";
-import {onGoHomeClick} from "./util";
+import activateGoHomeButton from "./go-home";
 
 const gameThreeImagesScreenTemplate = `
 <header class="header">
@@ -53,7 +53,6 @@ const ANSWER_CLASS_NAME = `game__option`;
 
 const gameThreeImageScreenElement = createDomElementFromStringTemplate(gameThreeImagesScreenTemplate);
 const gameForm = gameThreeImageScreenElement.querySelector(`.game__content`);
-const back = gameThreeImageScreenElement.querySelector(`.back`);
 
 const onGameFormClick = (evt) => {
   let target = evt.target;
@@ -66,6 +65,6 @@ const onGameFormClick = (evt) => {
 };
 
 gameForm.addEventListener(`click`, onGameFormClick);
-back.addEventListener(`click`, onGoHomeClick);
+activateGoHomeButton(gameThreeImageScreenElement);
 
 export default gameThreeImageScreenElement;

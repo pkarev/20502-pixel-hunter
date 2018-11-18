@@ -1,7 +1,8 @@
 import createDomElementFromStringTemplate from './create-dom-element';
 import renderScreen from './render-screen';
 import gameTwoImageScreenElement from './screen-game-two-images';
-import {debounce, onGoHomeClick} from "./util";
+import {debounce} from "./util";
+import activateGoHomeButton from "./go-home";
 
 const rulesScreenTemplate = `
   <header class="header">
@@ -36,7 +37,6 @@ const rulesScreenTemplate = `
 const rulesScreenElement = createDomElementFromStringTemplate(rulesScreenTemplate);
 const rulesScreenNext = rulesScreenElement.querySelector(`.rules__button`);
 const playerName = rulesScreenElement.querySelector(`.rules__input`);
-const back = rulesScreenElement.querySelector(`.back`);
 
 const onPlayerNameInput = debounce((evt) => {
   if (evt.target.value) {
@@ -61,6 +61,6 @@ const onRulesScreenNextClick = (evt) => {
 
 playerName.addEventListener(`input`, onPlayerNameInput);
 rulesScreenNext.addEventListener(`click`, onRulesScreenNextClick);
-back.addEventListener(`click`, onGoHomeClick);
+activateGoHomeButton(rulesScreenElement);
 
 export default rulesScreenElement;
