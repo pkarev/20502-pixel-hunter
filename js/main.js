@@ -4,3 +4,4 @@ import * as screensSwitcher from "./screens-switcher";
 
 renderScreen(introScreenElement);
 screensSwitcher.addScreenSwitchingButtons();
+screensSwitcher.activateKeyboardScreenSwitching();

@@ -7,6 +7,7 @@ import gameTwoImageScreenElement from "./screen-game-two-images";
 import gameOneImageScreenElement from "./screen-game-one-image";
 import gameThreeImageScreenElement from "./screen-game-three-images";
 import statsScreenElement from "./screen-stats";
+import {isLeftArrowKeyup, isRightArrowKeyup} from "./util";
 
 const screenControlsTemplate = `
 <div class="arrows__wrap">
@@ -75,4 +76,14 @@ controlNext.addEventListener(`click`, onScreenNextClick);
 
 export const addScreenSwitchingButtons = () => {
   document.body.appendChild(screenControlsElement);
+};
+
+const onDocumentArrowKeyUp = (evt) => {
+  evt.preventDefault();
+  isLeftArrowKeyup(evt, renderPreviousScreen);
+  isRightArrowKeyup(evt, renderNextScreen);
+};
+
+export const activateKeyboardScreenSwitching = () => {
+  document.addEventListener(`keyup`, onDocumentArrowKeyUp);
 };
