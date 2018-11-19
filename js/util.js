@@ -17,19 +17,6 @@ export const isRightArrowKeyup = (evt, action) => {
   action();
 };
 
-const debounce = (fun, debounceInterval) => {
-  let lastTimeout = null;
-
-  return function (...args) {
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
-    lastTimeout = window.setTimeout(function () {
-      fun(...args);
-    }, debounceInterval);
-  };
-};
-
 const validateFields = (formFields) => {
   let isAllFieldsValid = true;
   formFields.forEach((formField) => {
@@ -39,4 +26,4 @@ const validateFields = (formFields) => {
   return isAllFieldsValid;
 };
 
-export {debounce, validateFields};
+export {validateFields};
