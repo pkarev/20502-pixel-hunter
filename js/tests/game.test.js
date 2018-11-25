@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {changeLevel, changeLives, INITIAL_GAME_STATE} from '../game';
+import {changeLevel, changeLives, INITIAL_GAME_STATE, Timer} from '../game';
 
 describe(`Change level`, () => {
   it(`should update level of the game`, () => {
@@ -41,5 +41,51 @@ describe(`Change lives`, () => {
     assert.throws(() => changeLives(INITIAL_GAME_STATE, []).lives, /New game lives must be a number/);
     assert.throws(() => changeLives(INITIAL_GAME_STATE, {}).lives, /New game lives must be a number/);
     assert.throws(() => changeLives(INITIAL_GAME_STATE, undefined).lives, /New game lives must be a number/);
+  });
+});
+
+describe(`Timer`, () => {
+  it(`can't be created with zero or negative initial time`, () => {
+    assert.throws(() => new Timer(0), `Can't create zero or negative timer`);
+    assert.throws(() => new Timer(-1), `Can't create zero or negative timer`);
+  });
+
+  it(`can't accept initial time as non-number`, () => {
+    assert.throws(() => new Timer([]), `Initial time must be a number`);
+    assert.throws(() => new Timer({}), `Initial time must be a number`);
+    assert.throws(() => new Timer(undefined), `Initial time must be a number`);
+  });
+
+  it(`must reduce initial time by 1 each tick`, () => {
+    const testTimer = new Timer(100);
+    testTimer.tick();
+    assert.equal(testTimer.time, 99);
+    testTimer.tick();
+    assert.equal(testTimer.time, 98);
+    testTimer.tick();
+    assert.equal(testTimer.time, 97);
+  });
+
+  it(`must change timer status`, () => {
+    const testTimer = new Timer(6);
+    assert.equal(testTimer.status, ``);
+    testTimer.tick();
+    assert.equal(testTimer.time, 5);
+    assert.equal(testTimer.status, `blinking`);
+    testTimer.tick();
+    testTimer.tick();
+    testTimer.tick();
+    testTimer.tick();
+    assert.equal(testTimer.time, 1);
+    assert.equal(testTimer.status, `blinking`);
+    testTimer.tick();
+    assert.equal(testTimer.time, 0);
+    assert.equal(testTimer.status, `time is over`);
+  });
+
+  it(`must not set negative time after the time is over`, () => {
+    const testTimer = new Timer(1);
+    testTimer.tick();
+    assert.throws(() => testTimer.tick(), /Timer time can't be negative/);
   });
 });

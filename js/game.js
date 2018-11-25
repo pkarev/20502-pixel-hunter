@@ -1,10 +1,10 @@
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
-  level: 0,
-  time: 30
+  level: 0
 });
 
 export const MAX_LIVES = 3;
+export const TIME_PER_QUESTION = 30;
 
 export const changeLevel = (gameState, level) => {
   if (typeof level !== `number`) {
@@ -35,3 +35,41 @@ export const changeLives = (gameState, lives) => {
   const newGameState = Object.assign({}, gameState, {lives});
   return newGameState;
 };
+
+export class Timer {
+  constructor(time) {
+    if (typeof time !== `number`) {
+      throw new Error(`Initial time must be a number`);
+    }
+    if (time <= 0) {
+      throw new Error(`Can't create zero or negative timer`);
+    }
+
+    this.time = time;
+    this.status = ``;
+  }
+
+  get time() {
+    return this._time;
+  }
+
+  set time(value) {
+    if (value <= 5) {
+      this.status = `blinking`;
+    }
+
+    if (value === 0) {
+      this.status = `time is over`;
+    }
+
+    this._time = value;
+  }
+
+  tick() {
+    if (this.time <= 0) {
+      throw new Error(`Timer time can't be negative`);
+    }
+
+    this.time -= 1;
+  }
+}
