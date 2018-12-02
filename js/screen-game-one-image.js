@@ -3,8 +3,10 @@ import {validateFields} from "./util";
 import renderScreen from "./render-screen";
 import gameThreeImageScreenElement from "./screen-game-three-images";
 import activateGoHomeButton from "./go-home";
+import {INITIAL_GAME_STATE, MAX_LIVES} from "./game";
+import {mockQuestions} from "./mocks/questions.mock";
 
-const headerTemplate = `
+const headerTemplate = (gameState) => `
 <button class="back">
   <span class="visually-hidden">Вернуться к началу</span>
   <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
@@ -14,19 +16,18 @@ const headerTemplate = `
     <use xlink:href="img/sprite.svg#logo-small"></use>
   </svg>
 </button>
-<div class="game__timer">NN</div>
+<div class="game__timer">${gameState.time}</div>
 <div class="game__lives">
-  <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">
-  <img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">
-  <img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">
+  ${new Array(MAX_LIVES - gameState.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
+  ${new Array(gameState.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
 </div>
 `;
 
-const questionTwoImagesTemplate = `
-<p class="game__task">Угадай, фото или рисунок?</p>
+const questionOneImageTemplate = (question) => `
+<p class="game__task">${question.task}</p>
 <form class="game__content  game__content--wide">
   <div class="game__option">
-    <img src="http://placehold.it/705x455" alt="Option 1" width="705" height="455">
+    <img src="${question.images[0].src}" alt="Option 1" width="705" height="455">
     <label class="game__answer  game__answer--photo">
       <input class="visually-hidden" name="question1" type="radio" value="photo" required>
       <span>Фото</span>
@@ -56,10 +57,10 @@ const statsTemplate = `
 
 const gameOneImageScreenTemplate = `
 <header class="header">
-  ${headerTemplate}
+  ${headerTemplate(INITIAL_GAME_STATE)}
 </header>
 <section class="game">
-  ${questionTwoImagesTemplate}
+  ${questionOneImageTemplate(mockQuestions[0])}
   ${statsTemplate}
 </section>
 `;

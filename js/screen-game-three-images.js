@@ -2,8 +2,10 @@ import createDomElementFromStringTemplate from "./create-dom-element";
 import renderScreen from "./render-screen";
 import statsScreenElement from "./screen-stats";
 import activateGoHomeButton from "./go-home";
+import {INITIAL_GAME_STATE, MAX_LIVES} from "./game";
+import {mockQuestions} from "./mocks/questions.mock";
 
-const headerTemplate = `
+const headerTemplate = (gameState) => `
 <button class="back">
   <span class="visually-hidden">Вернуться к началу</span>
   <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
@@ -13,26 +15,21 @@ const headerTemplate = `
     <use xlink:href="img/sprite.svg#logo-small"></use>
   </svg>
 </button>
-<div class="game__timer">NN</div>
+<div class="game__timer">${gameState.time}</div>
 <div class="game__lives">
-  <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">
-  <img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">
-  <img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">
+  ${new Array(MAX_LIVES - gameState.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
+  ${new Array(gameState.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
 </div>
 `;
 
-const questionTwoImagesTemplate = `
-<p class="game__task">Найдите рисунок среди изображений</p>
+const questionTwoImagesTemplate = (question) => `
+<p class="game__task">${question.task}</p>
 <form class="game__content  game__content--triple">
-  <div class="game__option">
-    <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-  </div>
-  <div class="game__option  game__option--selected">
-    <img src="http://placehold.it/304x455" alt="Option 2" width="304" height="455">
-  </div>
-  <div class="game__option">
-    <img src="http://placehold.it/304x455" alt="Option 3" width="304" height="455">
-  </div>
+  ${question.images.map((image) => `
+    <div class="game__option">
+      <img src="${image.src}" alt="Option 1" width="304" height="455">
+    </div>
+  `).join(``)}
 </form>
 `;
 
@@ -53,10 +50,10 @@ const statsTemplate = `
 
 const gameThreeImagesScreenTemplate = `
 <header class="header">
-  ${headerTemplate}
+  ${headerTemplate(INITIAL_GAME_STATE)}
 </header>
 <section class="game">
-  ${questionTwoImagesTemplate}
+  ${questionTwoImagesTemplate(mockQuestions[2])}
   ${statsTemplate}
 </section>
 `;

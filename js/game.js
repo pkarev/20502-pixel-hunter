@@ -1,10 +1,11 @@
+export const MAX_LIVES = 3;
+const TIME_PER_QUESTION = 30;
+
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
-  level: 0
+  level: 0,
+  time: TIME_PER_QUESTION,
 });
-
-export const MAX_LIVES = 3;
-export const TIME_PER_QUESTION = 30;
 
 export const changeLevel = (gameState, level) => {
   if (typeof level !== `number`) {
