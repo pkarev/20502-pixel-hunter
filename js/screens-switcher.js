@@ -37,9 +37,7 @@ export const screens = [
   introScreenElement,
   greetingScreenElement,
   rulesScreenElement,
-  gameTwoImageScreenElement,
-  gameOneImageScreenElement,
-  gameThreeImageScreenElement,
+  gameScreenElement,
   statsScreenElement
 ];
 

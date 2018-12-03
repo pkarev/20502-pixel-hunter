@@ -7,6 +7,31 @@ export const INITIAL_GAME_STATE = Object.freeze({
   time: TIME_PER_QUESTION,
 });
 
+const AnswerBreakPoint = {
+  IS_SLOW: 10,
+  IS_FAST: 20,
+};
+
+export class Answer {
+  constructor(correctness, time) {
+    this.isCorrect = correctness;
+
+    if (this.isCorrect) {
+      if (time > AnswerBreakPoint.IS_FAST) {
+        this.speed = 'fast';
+      }
+
+      if (time >= AnswerBreakPoint.IS_SLOW && time <= AnswerBreakPoint.IS_FAST) {
+        this.speed = 'normal';
+      }
+
+      if (time < AnswerBreakPoint.IS_SLOW) {
+        this.speed = 'slow';
+      }
+    }
+  }
+}
+
 export const changeLevel = (gameState, level) => {
   if (typeof level !== `number`) {
     throw new Error(`New game level must be a number`);

@@ -3,7 +3,7 @@ import renderScreen from "./render-screen";
 import gameOneImageScreenElement from "./screen-game-one-image";
 import {validateFields} from "./util";
 import activateGoHomeButton from "./go-home";
-import {mockQuestions} from "./mocks/questions.mock";
+import {mockQuestions} from "./questions.mock";
 import {INITIAL_GAME_STATE, MAX_LIVES} from "./game";
 
 const headerTemplate = (gameState) => `

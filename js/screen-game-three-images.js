@@ -3,7 +3,7 @@ import renderScreen from "./render-screen";
 import statsScreenElement from "./screen-stats";
 import activateGoHomeButton from "./go-home";
 import {INITIAL_GAME_STATE, MAX_LIVES} from "./game";
-import {mockQuestions} from "./mocks/questions.mock";
+import {mockQuestions} from "./questions.mock";
 
 const headerTemplate = (gameState) => `
 <button class="back">
