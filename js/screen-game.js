@@ -48,11 +48,11 @@ const questionTwoImagesTemplate = (question) => `
   <div class="game__option">
     <img src="${image.src}" alt="Option ${index + 1}" width="468" height="458">
     <label class="game__answer game__answer--photo">
-      <input class="visually-hidden" name="question${index + 1}" type="radio" value="photo" required>
+      <input class="visually-hidden" name="question${index + 1}" data-image-index="${index}" type="radio" value="photo" required>
       <span>Фото</span>
     </label>
     <label class="game__answer game__answer--paint">
-      <input class="visually-hidden" name="question${index + 1}" type="radio" value="paint" required>
+      <input class="visually-hidden" name="question${index + 1}" data-image-index="${index}" type="radio" value="paint" required>
       <span>Рисунок</span>
     </label>
   </div>
@@ -88,10 +88,10 @@ const statsTemplate = `
 
 export const gameScreenElement = (gameState) => {
   const question = mockQuestions[gameState.level];
+  const nextLevel = gameState.level < MAX_LEVELS - 1 ? gameState.level + 1 : null;
 
   const activateGameOneImageElement = (element) => {
     const answerOptions = Array.from(element.querySelectorAll(`input`));
-    const nextLevel = gameState.level < MAX_LEVELS - 1 ? gameState.level + 1 : null;
 
     answerOptions.forEach((option) => {
       option.addEventListener(`change`, (evt) => {
@@ -116,22 +116,39 @@ export const gameScreenElement = (gameState) => {
   };
 
   const activateGameTwoImagesElement = (element) => {
-    const answers = Array.from(element.querySelectorAll(`input`));
+    const answerOptions = Array.from(element.querySelectorAll(`input`));
+    answerOptions.forEach((option) => {
+      option.addEventListener(`change`, (evt) => {
+        let isAllOptionsChosen = validateFields(answerOptions);
+        const isPainting = evt.target.value === `paint`;
+        const isCorrect = isPainting === question.images[evt.target.dataset.imageIndex].isPainting;
+        let answer = new Answer(isCorrect, gameState.time);
 
-    answers.forEach((answer) => {
-      answer.addEventListener(`change`, () => {
-        let isFormValid = validateFields(answers);
-        if (!isFormValid) {
+        if (!isCorrect) {
+          gameState = changeLives(gameState, gameState.lives - 1);
+          currentGameAnswers.push(answer);
+
+          if (!nextLevel) {
+            renderScreen(statsScreenElement);
+            return;
+          }
+
+          gameState = changeLevel(gameState, nextLevel);
+          renderScreen(gameScreenElement(gameState));
           return;
         }
 
-        if (gameState.level === MAX_LEVELS - 1) {
+        if (!isAllOptionsChosen) {
+          return;
+        }
+
+        currentGameAnswers.push(answer);
+        if (!nextLevel) {
           renderScreen(statsScreenElement);
           return;
         }
 
-        const newLevel = gameState.level + 1;
-        gameState = changeLevel(gameState, newLevel);
+        gameState = changeLevel(gameState, nextLevel);
         renderScreen(gameScreenElement(gameState));
       });
     });
