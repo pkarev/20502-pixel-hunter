@@ -2,9 +2,10 @@ import createDomElementFromStringTemplate from "./create-dom-element";
 import {validateFields} from "./util";
 import renderScreen from "./render-screen";
 import activateGoHomeButton from "./go-home";
-import {changeLevel, MAX_LIVES, MAX_LEVELS} from "./game";
+import {changeLevel, MAX_LIVES, MAX_LEVELS, changeLives, Answer} from "./game";
 import {mockQuestions} from "./questions.mock";
 import statsScreenElement from "./screen-stats";
+import {currentGameAnswers} from "./main";
 
 const headerTemplate = (gameState) => `
 <button class="back">
@@ -89,22 +90,26 @@ export const gameScreenElement = (gameState) => {
   const question = mockQuestions[gameState.level];
 
   const activateGameOneImageElement = (element) => {
-    const answers = Array.from(element.querySelectorAll(`input`));
+    const answerOptions = Array.from(element.querySelectorAll(`input`));
+    const nextLevel = gameState.level < MAX_LEVELS - 1 ? gameState.level + 1 : null;
 
-    answers.forEach((answer) => {
-      answer.addEventListener(`change`, () => {
-        let isFormValid = validateFields(answers);
-        if (!isFormValid) {
-          return;
+    answerOptions.forEach((option) => {
+      option.addEventListener(`change`, (evt) => {
+        const isPainting = evt.target.value === `paint`;
+        const isCorrect = isPainting === question.images[0].isPainting;
+        const answer = new Answer(isCorrect, gameState.time);
+        currentGameAnswers.push(answer);
+
+        if (!isCorrect) {
+          gameState = changeLives(gameState, gameState.lives - 1);
         }
 
-        if (gameState.level === MAX_LEVELS - 1) {
+        if (!nextLevel) {
           renderScreen(statsScreenElement);
           return;
         }
 
-        const newLevel = gameState.level + 1;
-        gameState = changeLevel(gameState, newLevel);
+        gameState = changeLevel(gameState, nextLevel);
         renderScreen(gameScreenElement(gameState));
       });
     });
