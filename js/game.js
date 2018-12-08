@@ -1,4 +1,5 @@
 export const MAX_LIVES = 3;
+export const MAX_LEVELS = 10;
 const TIME_PER_QUESTION = 30;
 
 export const INITIAL_GAME_STATE = Object.freeze({
