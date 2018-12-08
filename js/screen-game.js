@@ -43,15 +43,15 @@ const questionOneImageTemplate = (question) => `
 const questionTwoImagesTemplate = (question) => `
 <p class="game__task">${question.task}</p>
 <form class="game__content">
-  ${question.images.map((image) => `
+  ${question.images.map((image, index) => `
   <div class="game__option">
-    <img src="${image.src}" alt="Option 1" width="468" height="458">
+    <img src="${image.src}" alt="Option ${index + 1}" width="468" height="458">
     <label class="game__answer game__answer--photo">
-      <input class="visually-hidden" name="question1" type="radio" value="photo" required>
+      <input class="visually-hidden" name="question${index + 1}" type="radio" value="photo" required>
       <span>Фото</span>
     </label>
     <label class="game__answer game__answer--paint">
-      <input class="visually-hidden" name="question1" type="radio" value="paint" required>
+      <input class="visually-hidden" name="question${index + 1}" type="radio" value="paint" required>
       <span>Рисунок</span>
     </label>
   </div>
