@@ -101,7 +101,12 @@ export const gameScreenElement = (gameState) => {
         currentGameAnswers.push(answer);
 
         if (!isCorrect) {
-          gameState = changeLives(gameState, gameState.lives - 1);
+          if (gameState.lives > 0) {
+            gameState = changeLives(gameState, gameState.lives - 1);
+          } else {
+            gameOver();
+            return;
+          }
         }
 
         if (!nextLevel) {
@@ -115,6 +120,10 @@ export const gameScreenElement = (gameState) => {
     });
   };
 
+  const gameOver = () => {
+    renderScreen(statsScreenElement);
+  };
+
   const activateGameTwoImagesElement = (element) => {
     const answerOptions = Array.from(element.querySelectorAll(`input`));
     answerOptions.forEach((option) => {
@@ -125,8 +134,13 @@ export const gameScreenElement = (gameState) => {
         let answer = new Answer(isCorrect, gameState.time);
 
         if (!isCorrect) {
-          gameState = changeLives(gameState, gameState.lives - 1);
           currentGameAnswers.push(answer);
+          if (gameState.lives > 0) {
+            gameState = changeLives(gameState, gameState.lives - 1);
+          } else {
+            gameOver();
+            return;
+          }
 
           if (!nextLevel) {
             renderScreen(statsScreenElement);
@@ -170,7 +184,12 @@ export const gameScreenElement = (gameState) => {
         currentGameAnswers.push(answer);
 
         if (!isCorrect) {
-          gameState = changeLives(gameState, gameState.lives - 1);
+          if (gameState.lives > 0) {
+            gameState = changeLives(gameState, gameState.lives - 1);
+          } else {
+            gameOver();
+            return;
+          }
         }
 
         if (!nextLevel) {
