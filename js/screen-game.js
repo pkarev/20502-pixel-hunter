@@ -2,7 +2,7 @@ import createDomElementFromStringTemplate from "./create-dom-element";
 import {validateFields} from "./util";
 import renderScreen from "./render-screen";
 import activateGoHomeButton from "./go-home";
-import {changeLevel, MAX_LIVES, MAX_LEVELS, changeLives, Answer} from "./game";
+import {changeLevel, MAX_LIVES, MAX_LEVELS, changeLives, Answer, AnswerSpeed} from "./game";
 import {mockQuestions, questionType} from "./questions.mock";
 import statsScreenElement from "./screen-stats";
 import {currentGameAnswers} from "./main";
@@ -71,18 +71,27 @@ const questionThreeImagesTemplate = (question) => `
 </form>
 `;
 
-const statsTemplate = `
+const getStatsClass = (answer) => {
+  if (!answer.isCorrect) {
+    return `wrong`
+  }
+
+  switch (answer.speed) {
+    case AnswerSpeed.FAST:
+      return `fast`;
+    case AnswerSpeed.NORMAL:
+      return `normal`;
+    case AnswerSpeed.SLOW:
+      return `slow`
+  }
+};
+
+const statsTemplate = (answers) => `
 <ul class="stats">
-  <li class="stats__result stats__result--wrong"></li>
-  <li class="stats__result stats__result--slow"></li>
-  <li class="stats__result stats__result--fast"></li>
-  <li class="stats__result stats__result--correct"></li>
-  <li class="stats__result stats__result--wrong"></li>
-  <li class="stats__result stats__result--unknown"></li>
-  <li class="stats__result stats__result--slow"></li>
-  <li class="stats__result stats__result--unknown"></li>
-  <li class="stats__result stats__result--fast"></li>
-  <li class="stats__result stats__result--unknown"></li>
+  ${answers.map((answer) => ` 
+  <li class="stats__result stats__result--${getStatsClass(answer)}"></li>
+  `
+  ).join(``)}
 </ul>
 `;
 
@@ -229,7 +238,7 @@ export const gameScreenElement = (gameState) => {
     </header>
     <section class="game">
       ${getGameTemplate()}
-      ${statsTemplate}
+      ${statsTemplate(currentGameAnswers)}
     </section>
   `;
 

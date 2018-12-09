@@ -13,6 +13,12 @@ const AnswerBreakPoint = {
   IS_FAST: 20,
 };
 
+export const AnswerSpeed = {
+  FAST: `fast`,
+  NORMAL: `normal`,
+  SLOW: `slow`
+};
+
 export class Answer {
   constructor(correctness, time) {
     this.isCorrect = correctness;
