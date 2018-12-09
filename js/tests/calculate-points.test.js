@@ -1,27 +1,27 @@
 import {assert} from 'chai';
 import calculateGamePoints, {ANSWERS_NORMAL_LENGTH} from './../calculate-points';
+import {AnswerSpeed} from "../game";
 
-const Answer = function (isCorrect, isFast, isSlow) {
+const Answer = function (isCorrect, speed) {
   this.isCorrect = isCorrect;
-  this.isFast = isFast;
-  this.isSlow = isSlow;
+  this.speed = speed;
 };
 
-const generateMockAnswers = (isCorrect, isFast, isSlow) => {
+const generateMockAnswers = (isCorrect, speed) => {
   let answers = [];
   for (let i = 0; i < ANSWERS_NORMAL_LENGTH; i++) {
-    answers.push(new Answer(isCorrect, isFast, isSlow));
+    answers.push(new Answer(isCorrect, speed));
   }
 
   return answers;
 };
 
-const allCorrectNormal = generateMockAnswers(true, false, false);
-const allCorrectFast = generateMockAnswers(true, true, false);
-const allCorrectSlow = generateMockAnswers(true, false, true);
-const allIncorrectNormal = generateMockAnswers(false, false, false);
-const allIncorrectFast = generateMockAnswers(false, true, false);
-const allIncorrectSlow = generateMockAnswers(false, false, true);
+const allCorrectNormal = generateMockAnswers(true, AnswerSpeed.NORMAL);
+const allCorrectFast = generateMockAnswers(true, AnswerSpeed.FAST);
+const allCorrectSlow = generateMockAnswers(true, AnswerSpeed.SLOW);
+const allIncorrectNormal = generateMockAnswers(false, AnswerSpeed.NORMAL);
+const allIncorrectFast = generateMockAnswers(false, AnswerSpeed.FAST);
+const allIncorrectSlow = generateMockAnswers(false, AnswerSpeed.SLOW);
 const notEnoughAnswers = new Array(5);
 const emptyAnswers = [];
 const tooManyAnswers = [];

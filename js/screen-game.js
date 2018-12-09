@@ -2,10 +2,17 @@ import createDomElementFromStringTemplate from "./create-dom-element";
 import {validateFields} from "./util";
 import renderScreen from "./render-screen";
 import activateGoHomeButton from "./go-home";
-import {changeLevel, MAX_LIVES, MAX_LEVELS, changeLives, Answer, AnswerSpeed} from "./game";
+import {
+  changeLevel,
+  MAX_LIVES,
+  MAX_LEVELS,
+  changeLives,
+  Answer,
+  AnswerSpeed,
+  currentGameAnswers,
+} from "./game";
 import {mockQuestions, questionType} from "./questions.mock";
 import statsScreenElement from "./screen-stats";
-import {currentGameAnswers} from "./main";
 
 const headerTemplate = (gameState) => `
 <button class="back">
@@ -86,7 +93,7 @@ const getStatsClass = (answer) => {
   }
 };
 
-const statsTemplate = (answers) => `
+export const statsTemplate = (answers) => `
 <ul class="stats">
   ${answers.map((answer) => ` 
   <li class="stats__result stats__result--${getStatsClass(answer)}"></li>
@@ -113,13 +120,14 @@ export const gameScreenElement = (gameState) => {
           if (gameState.lives > 0) {
             gameState = changeLives(gameState, gameState.lives - 1);
           } else {
+            gameState.isWin = false;
             gameOver();
             return;
           }
         }
 
         if (!nextLevel) {
-          renderScreen(statsScreenElement);
+          renderScreen(statsScreenElement(currentGameAnswers, gameState));
           return;
         }
 
@@ -130,7 +138,7 @@ export const gameScreenElement = (gameState) => {
   };
 
   const gameOver = () => {
-    renderScreen(statsScreenElement);
+    renderScreen(statsScreenElement(currentGameAnswers, gameState));
   };
 
   const activateGameTwoImagesElement = (element) => {
@@ -147,12 +155,13 @@ export const gameScreenElement = (gameState) => {
           if (gameState.lives > 0) {
             gameState = changeLives(gameState, gameState.lives - 1);
           } else {
+            gameState.isWin = false;
             gameOver();
             return;
           }
 
           if (!nextLevel) {
-            renderScreen(statsScreenElement);
+            renderScreen(statsScreenElement(currentGameAnswers, gameState));
             return;
           }
 
@@ -167,7 +176,7 @@ export const gameScreenElement = (gameState) => {
 
         currentGameAnswers.push(answer);
         if (!nextLevel) {
-          renderScreen(statsScreenElement);
+          renderScreen(statsScreenElement(currentGameAnswers, gameState));
           return;
         }
 
@@ -196,13 +205,14 @@ export const gameScreenElement = (gameState) => {
           if (gameState.lives > 0) {
             gameState = changeLives(gameState, gameState.lives - 1);
           } else {
+            gameState.isWin = false;
             gameOver();
             return;
           }
         }
 
         if (!nextLevel) {
-          renderScreen(statsScreenElement);
+          renderScreen(statsScreenElement(currentGameAnswers, gameState));
           return;
         }
 

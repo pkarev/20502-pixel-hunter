@@ -6,7 +6,16 @@ export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
   level: 0,
   time: TIME_PER_QUESTION,
+  isWin: true
 });
+
+export let currentGameState = INITIAL_GAME_STATE;
+export let currentGameAnswers = [];
+
+export const resetGame = () => {
+  currentGameState = INITIAL_GAME_STATE;
+  currentGameAnswers = [];
+};
 
 const AnswerBreakPoint = {
   IS_SLOW: 10,

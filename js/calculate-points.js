@@ -1,6 +1,8 @@
+import {AnswerSpeed} from "./game";
+
 export const ANSWERS_NORMAL_LENGTH = 10;
 
-const PointsPer = {
+export const PointsPer = {
   LIVE_LEFT: 50,
   CORRECT_ANSWER: 100,
   FAST_ANSWER: 50,
@@ -22,10 +24,10 @@ const calculateGamePoints = (answers, livesLeft) => {
     if (answer.isCorrect) {
       points += PointsPer.CORRECT_ANSWER;
     }
-    if (answer.isFast) {
+    if (answer.speed === AnswerSpeed.FAST) {
       points += PointsPer.FAST_ANSWER;
     }
-    if (answer.isSlow) {
+    if (answer.speed === AnswerSpeed.SLOW) {
       points += PointsPer.SLOW_ANSWER;
     }
   }

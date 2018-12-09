@@ -2,7 +2,7 @@ import createDomElementFromStringTemplate from './create-dom-element';
 import renderScreen from './render-screen';
 import activateGoHomeButton from "./go-home";
 import {gameScreenElement} from "./screen-game";
-import {currentGameState} from "./main";
+import {currentGameState} from "./game";
 
 const rulesScreenTemplate = `
   <header class="header">
