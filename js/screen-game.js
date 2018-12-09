@@ -3,7 +3,7 @@ import {validateFields} from "./util";
 import renderScreen from "./render-screen";
 import activateGoHomeButton from "./go-home";
 import {changeLevel, MAX_LIVES, MAX_LEVELS, changeLives, Answer} from "./game";
-import {mockQuestions} from "./questions.mock";
+import {mockQuestions, questionType} from "./questions.mock";
 import statsScreenElement from "./screen-stats";
 import {currentGameAnswers} from "./main";
 
@@ -63,9 +63,9 @@ const questionTwoImagesTemplate = (question) => `
 const questionThreeImagesTemplate = (question) => `
 <p class="game__task">${question.task}</p>
 <form class="game__content  game__content--triple">
-  ${question.images.map((image) => `
+  ${question.images.map((image, index) => `
     <div class="game__option">
-      <img src="${image.src}" alt="Option 1" width="304" height="455">
+      <img src="${image.src}" alt="Option ${index + 1}" data-image-index="${index}" width="304" height="455">
     </div>
   `).join(``)}
 </form>
@@ -155,28 +155,33 @@ export const gameScreenElement = (gameState) => {
   };
 
   const activateGameThreeImagesElement = (element) => {
-    const gameForm = element.querySelector(`.game__content`);
-    const ANSWER_CLASS_NAME = `game__option`;
+    const gameOptions = element.querySelectorAll(`img`);
 
-    const onGameFormClick = (evt) => {
-      let target = evt.target;
-      while (target !== gameForm) {
-        if (gameState.level === MAX_LEVELS - 1) {
+    gameOptions.forEach((option, index) => {
+      option.addEventListener(`click`, (evt) => {
+        let isCorrect;
+        if (question.type === questionType.FIND_PAINTING) {
+          isCorrect = question.images[evt.target.dataset.imageIndex].isPainting === true;
+        } else {
+          isCorrect = question.images[evt.target.dataset.imageIndex].isPainting === false;
+        }
+
+        let answer = new Answer(isCorrect, gameState.time);
+        currentGameAnswers.push(answer);
+
+        if (!isCorrect) {
+          gameState = changeLives(gameState, gameState.lives - 1);
+        }
+
+        if (!nextLevel) {
           renderScreen(statsScreenElement);
           return;
         }
 
-        if (target.classList.contains(ANSWER_CLASS_NAME)) {
-          const newLevel = gameState.level + 1;
-          gameState = changeLevel(gameState, newLevel);
-          renderScreen(gameScreenElement(gameState));
-        }
-
-        target = target.parentNode;
-      }
-    };
-
-    gameForm.addEventListener(`click`, onGameFormClick);
+        gameState = changeLevel(gameState, nextLevel);
+        renderScreen(gameScreenElement(gameState));
+      });
+    });
   };
 
   let gameType = null;
@@ -213,9 +218,9 @@ export const gameScreenElement = (gameState) => {
 
   if (gameType === 1) {
     activateGameOneImageElement(element);
-  } else if (gameType ===2) {
+  } else if (gameType === 2) {
     activateGameTwoImagesElement(element);
-  } else if (gameType ==3) {
+  } else if (gameType === 3) {
     activateGameThreeImagesElement(element);
   }
 

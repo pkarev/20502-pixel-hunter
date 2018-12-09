@@ -43,7 +43,7 @@ const getShuffledCopy = (array) => {
 
 const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
 
-const questionType = {
+export const questionType = {
   GUESS_ONE: `guess-one`,
   GUESS_TWO: `guess-two`,
   FIND_PAINTING: `find-painting`,
