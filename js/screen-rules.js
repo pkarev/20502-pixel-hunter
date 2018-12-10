@@ -1,7 +1,8 @@
 import createDomElementFromStringTemplate from './create-dom-element';
 import renderScreen from './render-screen';
-import gameTwoImageScreenElement from './screen-game-two-images';
 import activateGoHomeButton from "./go-home";
+import {gameScreenElement} from "./screen-game";
+import {currentGameState} from "./game";
 
 const rulesScreenTemplate = `
   <header class="header">
@@ -55,7 +56,7 @@ const disableRulesScreenNext = () => {
 
 const onRulesScreenNextClick = (evt) => {
   evt.preventDefault();
-  renderScreen(gameTwoImageScreenElement);
+  renderScreen(gameScreenElement(currentGameState));
 };
 
 playerName.addEventListener(`input`, onPlayerNameInput);

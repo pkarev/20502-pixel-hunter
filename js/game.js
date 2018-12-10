@@ -1,10 +1,52 @@
+export const MAX_LIVES = 3;
+export const MAX_LEVELS = 10;
+const TIME_PER_QUESTION = 30;
+
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
-  level: 0
+  level: 0,
+  time: TIME_PER_QUESTION,
+  isWin: true
 });
 
-export const MAX_LIVES = 3;
-export const TIME_PER_QUESTION = 30;
+export let currentGameState = INITIAL_GAME_STATE;
+export let currentGameAnswers = [];
+
+export const resetGame = () => {
+  currentGameState = INITIAL_GAME_STATE;
+  currentGameAnswers = [];
+};
+
+const AnswerBreakPoint = {
+  IS_SLOW: 10,
+  IS_FAST: 20,
+};
+
+export const AnswerSpeed = {
+  FAST: `fast`,
+  NORMAL: `normal`,
+  SLOW: `slow`
+};
+
+export class Answer {
+  constructor(correctness, time) {
+    this.isCorrect = correctness;
+
+    if (this.isCorrect) {
+      if (time > AnswerBreakPoint.IS_FAST) {
+        this.speed = 'fast';
+      }
+
+      if (time >= AnswerBreakPoint.IS_SLOW && time <= AnswerBreakPoint.IS_FAST) {
+        this.speed = 'normal';
+      }
+
+      if (time < AnswerBreakPoint.IS_SLOW) {
+        this.speed = 'slow';
+      }
+    }
+  }
+}
 
 export const changeLevel = (gameState, level) => {
   if (typeof level !== `number`) {
