@@ -1,8 +1,7 @@
 import createDomElementFromStringTemplate from "./create-dom-element";
-import activateGoHomeButton from "./go-home";
 import {PointsPer} from "./calculate-points";
 import {statsTemplate} from "./screen-game";
-import {AnswerSpeed} from "./game";
+import {AnswerSpeed} from "./game-utils.js";
 import calculateGamePoints from "./calculate-points";
 
 const  StatsTitle = {
@@ -15,9 +14,7 @@ const getStatsTitle = (result) => {
 };
 
 const statsScreenTemplate = (answers, gameState) => {
-  console.log(answers);
   const totalScore = calculateGamePoints(answers, gameState.lives);
-  console.log(`total score ${totalScore}`);
   const correctAnswers = answers.filter((answer) => answer.isCorrect);
   const fastAnswers = answers.filter((answer) => answer.speed === AnswerSpeed.FAST);
   const slowAnswers = answers.filter((answer) => answer.speed === AnswerSpeed.SLOW);
@@ -79,7 +76,6 @@ const statsScreenTemplate = (answers, gameState) => {
 const statsScreenElement = (answers, gameState) => {
   const template = statsScreenTemplate(answers, gameState);
   const element = createDomElementFromStringTemplate(template);
-  activateGoHomeButton(element);
   return element;
 };
 

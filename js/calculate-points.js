@@ -1,4 +1,4 @@
-import {AnswerSpeed} from "./game";
+import {AnswerSpeed} from "./game-utils.js";
 
 export const ANSWERS_NORMAL_LENGTH = 10;
 

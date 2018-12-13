@@ -1,5 +1,6 @@
 import {assert} from 'chai';
-import {changeLevel, changeLives, INITIAL_GAME_STATE, Timer} from '../game';
+import {INITIAL_GAME_STATE} from '../game-utils';
+import {changeLevel, changeLives, Timer} from '../game';
 
 describe(`Change level`, () => {
   it(`should update level of the game`, () => {
