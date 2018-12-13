@@ -1,32 +1,5 @@
-export const MAX_LIVES = 3;
-export const MAX_LEVELS = 10;
-const TIME_PER_QUESTION = 30;
-
-export const INITIAL_GAME_STATE = Object.freeze({
-  lives: 3,
-  level: 0,
-  time: TIME_PER_QUESTION,
-  isWin: true
-});
-
-export let currentGameState = INITIAL_GAME_STATE;
-export let currentGameAnswers = [];
-
-export const resetGame = () => {
-  currentGameState = INITIAL_GAME_STATE;
-  currentGameAnswers = [];
-};
-
-const AnswerBreakPoint = {
-  IS_SLOW: 10,
-  IS_FAST: 20,
-};
-
-export const AnswerSpeed = {
-  FAST: `fast`,
-  NORMAL: `normal`,
-  SLOW: `slow`
-};
+import {mockQuestions} from "./questions.mock";
+import {AnswerBreakPoint, INITIAL_GAME_STATE, MAX_LIVES, MAX_LEVELS} from "./game-utils";
 
 export class Answer {
   constructor(correctness, time) {
@@ -113,5 +86,57 @@ export class Timer {
     }
 
     this.time -= 1;
+  }
+}
+
+export default class Game {
+  constructor() {
+    this.state = INITIAL_GAME_STATE;
+    this.questions = mockQuestions;
+    this.answers = [];
+  }
+
+  reset() {
+    this.state = INITIAL_GAME_STATE;
+    this.answers = [];
+  }
+
+  changeLives() {
+    if (this.state.lives === 0) {
+      this.state.isGameOver = true;
+      this.state.isWin = false;
+    } else {
+      this.state = changeLives(this.state, this.state.lives - 1);
+    }
+  }
+
+  changeLevel() {
+    if (this.state.level === MAX_LEVELS - 1) {
+      this.state.isGameOver = true;
+    } else {
+      this.state = changeLevel(this.state, this.state.level + 1);
+    }
+  }
+
+  onGameStateUpdate() {}
+
+  onGameOver() {}
+
+  onAnswer(correctness, time) {
+    const answer = new Answer(correctness, time);
+    this.answers.push(answer);
+
+    if (!answer.isCorrect) {
+      this.changeLives();
+    }
+
+    this.changeLevel();
+
+    if (this.state.isGameOver) {
+      this.onGameOver();
+      return;
+    }
+
+    this.onGameStateUpdate();
   }
 }

@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import calculateGamePoints, {ANSWERS_NORMAL_LENGTH} from './../calculate-points';
-import {AnswerSpeed} from "../game";
+import {AnswerSpeed} from "../game-utils";
 
 const Answer = function (isCorrect, speed) {
   this.isCorrect = isCorrect;

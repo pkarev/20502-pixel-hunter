@@ -1,3 +1,5 @@
+import {questionType, questionTypeToTask} from "./game-utils";
+
 const paintings = [
   {
     src: `https://k42.kn3.net/CF42609C8.jpg`,
@@ -43,20 +45,6 @@ const getShuffledCopy = (array) => {
 
 const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
 
-export const questionType = {
-  GUESS_ONE: `guess-one`,
-  GUESS_TWO: `guess-two`,
-  FIND_PAINTING: `find-painting`,
-  FIND_PHOTO: `find-photo`
-};
-
-export const questionTypeToTask = {
-  [questionType.GUESS_ONE]: `Угадай, фото или рисунок?`,
-  [questionType.GUESS_TWO]: `Угадайте для каждого изображения фото или рисунок?`,
-  [questionType.FIND_PAINTING]: `Найдите рисунок среди изображений`,
-  [questionType.FIND_PHOTO]: `Найдите фотографию среди изображений`,
-};
-
 class MockQuestion {
   constructor(type, images) {
     this.type = type;
@@ -65,7 +53,7 @@ class MockQuestion {
   }
 }
 
-export const mockQuestions = [
+export const mockQuestions = getShuffledCopy([
   new MockQuestion(questionType.GUESS_ONE, [getRandomItem(allImages)]),
   new MockQuestion(questionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
   new MockQuestion(questionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
@@ -76,4 +64,4 @@ export const mockQuestions = [
   new MockQuestion(questionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
   new MockQuestion(questionType.GUESS_ONE, [getRandomItem(allImages)]),
   new MockQuestion(questionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
-];
+]);
