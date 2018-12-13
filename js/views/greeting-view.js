@@ -25,7 +25,7 @@ export default class GreetingView extends AbstractView {
     `;
   }
 
-  onNextScreenClick() {};
+  onNextScreenClick() {}
 
   bind() {
     const greetingScreenNext = this.element.querySelector(`.greeting__continue`);

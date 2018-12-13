@@ -33,9 +33,9 @@ export default class RulesView extends AbstractView {
     `;
   }
 
-  onNextScreenClick() {};
+  onNextScreenClick() {}
 
-  onGoHomeClick() {};
+  onGoHomeClick() {}
 
   bind() {
     const element = this._element;
@@ -72,5 +72,5 @@ export default class RulesView extends AbstractView {
 
       this.onGoHomeClick();
     });
-  };
+  }
 }

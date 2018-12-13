@@ -16,7 +16,7 @@ export default class ModalConfirmView extends AbstractView {
           </div>
         </form>
       </section>    
-    `
+    `;
   }
 }
 

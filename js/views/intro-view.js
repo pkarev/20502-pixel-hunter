@@ -10,7 +10,7 @@ export default class IntroView extends AbstractView {
     `;
   }
 
-  onNextScreenClick() {};
+  onNextScreenClick() {}
 
   bind() {
     const nextScreenButton = this.element.querySelector(`.asterisk`);

@@ -3,7 +3,7 @@ import {AbstractView} from "./abstract-view";
 
 const getStatsClass = (answer) => {
   if (!answer.isCorrect) {
-    return `wrong`
+    return `wrong`;
   }
 
   switch (answer.speed) {
@@ -12,7 +12,9 @@ const getStatsClass = (answer) => {
     case AnswerSpeed.NORMAL:
       return `normal`;
     case AnswerSpeed.SLOW:
-      return `slow`
+      return `slow`;
+    default:
+      return ``;
   }
 };
 

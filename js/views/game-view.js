@@ -48,6 +48,8 @@ export default class GameView extends AbstractView {
         return `
           ${this.questionThreeImagesTemplate}
         `;
+      default:
+        return ``;
     }
   }
 
@@ -86,7 +88,7 @@ export default class GameView extends AbstractView {
           </label>
         </div>
       </form>
-    `
+    `;
   }
 
   get questionTwoImagesTemplate() {
@@ -123,9 +125,9 @@ export default class GameView extends AbstractView {
     `;
   }
 
-  onAnswer() {};
+  onAnswer() {}
 
-  onGoHomeClick() {};
+  onGoHomeClick() {}
 
   bind() {
     const goHome = this.element.querySelector(`.back`);
@@ -145,8 +147,10 @@ export default class GameView extends AbstractView {
         return this.bindThreeImagesQuestion();
       case (questionType.FIND_PAINTING):
         return this.bindThreeImagesQuestion();
+      default:
+        return null;
     }
-  };
+  }
 
   bindOneImageQuestion() {
     const answerOptions = Array.from(this.element.querySelectorAll(`input`));
@@ -177,7 +181,7 @@ export default class GameView extends AbstractView {
 
   bindThreeImagesQuestion() {
     const gameOptions = this.element.querySelectorAll(`img`);
-    gameOptions.forEach((option, index) => {
+    gameOptions.forEach((option) => {
       option.addEventListener(`click`, (evt) => {
         let isCorrect;
         if (this.question.type === questionType.FIND_PAINTING) {
