@@ -1,24 +1,11 @@
 import {AbstractView} from "./abstract-view";
-import {AnswerSpeed, MAX_LIVES, questionType, validateFields} from "./game-utils";
-
-const getStatsClass = (answer) => {
-  if (!answer.isCorrect) {
-    return `wrong`
-  }
-
-  switch (answer.speed) {
-    case AnswerSpeed.FAST:
-      return `fast`;
-    case AnswerSpeed.NORMAL:
-      return `normal`;
-    case AnswerSpeed.SLOW:
-      return `slow`
-  }
-};
+import {MAX_LIVES, questionType, validateFields} from "./game-utils";
+import GameProcessStatsView from "./game-process-stats-view";
 
 export default class GameView extends AbstractView {
   constructor(game) {
     super();
+    this.game = game;
     this.lives = game.state.lives;
     this.time = game.state.time;
     this.level = game.state.level;
@@ -33,9 +20,14 @@ export default class GameView extends AbstractView {
       </header>
       <section class="game">
         ${this.questionTemplate}
-        ${this.statsTemplate}
+        ${this.gameProcessStatsTemplate}
       </section>
     `;
+  }
+
+  get gameProcessStatsTemplate() {
+    const gameProcessStatsView = new GameProcessStatsView(this.game);
+    return gameProcessStatsView.template;
   }
 
   get questionTemplate() {
@@ -131,19 +123,7 @@ export default class GameView extends AbstractView {
     `;
   }
 
-  get statsTemplate() {
-    return `
-    <ul class="stats">
-        ${this.answers.map((answer) => `<li class="stats__result stats__result--${getStatsClass(answer)}"></li>`).join(``)}
-    </ul>
-    `;
-  }
-
   onAnswer() {};
-
-  onGameWin() {};
-
-  onGameContinue() {};
 
   bind() {
     switch (this.question.type) {

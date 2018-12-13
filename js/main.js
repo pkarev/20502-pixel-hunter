@@ -5,6 +5,7 @@ import GreetingView from "./greeting-view";
 import RulesView from "./rules-view";
 import Game from "./game";
 import GameView from "./game-view";
+import StatsView from "./stats-view";
 
 const game = new Game();
 const introView = new IntroView();
@@ -44,6 +45,13 @@ game.onGameStateUpdate = () => {
 };
 
 game.onGameOver = () => {
-  console.log(`here must be render stats screen`);
+  const statsView = new StatsView(game);
+  renderScreen(statsView.element);
+
+  statsView.onGoHomeClick = () => {
+    game.reset();
+    renderScreen(introView.element);
+  };
 };
+
 

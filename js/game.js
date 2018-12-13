@@ -94,7 +94,6 @@ export default class Game {
     this.state = INITIAL_GAME_STATE;
     this.questions = mockQuestions;
     this.answers = [];
-    this.isGameOver = false;
   }
 
   reset() {
@@ -104,7 +103,8 @@ export default class Game {
 
   changeLives() {
     if (this.state.lives === 0) {
-      this.isGameOver = true;
+      this.state.isGameOver = true;
+      this.state.isWin = false;
     } else {
       this.state = changeLives(this.state, this.state.lives - 1);
     }
@@ -112,7 +112,7 @@ export default class Game {
 
   changeLevel() {
     if (this.state.level === MAX_LEVELS - 1) {
-      this.isGameOver = true;
+      this.state.isGameOver = true;
     } else {
       this.state = changeLevel(this.state, this.state.level + 1);
     }
@@ -132,7 +132,7 @@ export default class Game {
 
     this.changeLevel();
 
-    if (this.isGameOver) {
+    if (this.state.isGameOver) {
       this.onGameOver();
       return;
     }
