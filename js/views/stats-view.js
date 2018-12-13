@@ -83,6 +83,8 @@ export default class StatsView extends AbstractView {
     `
   }
 
+  onGoHomeClick() {};
+
   bind() {
     const goHome = this.element.querySelector(`.back`);
 

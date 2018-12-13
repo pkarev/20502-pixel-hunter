@@ -11,7 +11,21 @@ const game = new Game();
 const introView = new IntroView();
 const greetingView = new GreetingView();
 const rulesView = new RulesView();
-const gameView = new GameView(game);
+
+const renderGame = () => {
+  const gameView = new GameView(game);
+
+  gameView.onGoHomeClick = () => {
+    game.reset();
+    renderScreen(introView.element);
+  };
+
+  gameView.onAnswer = (correctness, time) => {
+    game.onAnswer(correctness, time);
+  };
+
+  renderScreen(gameView.element);
+};
 
 renderScreen(introView.element);
 
@@ -28,20 +42,11 @@ rulesView.onGoHomeClick = () => {
 };
 
 rulesView.onNextScreenClick = () => {
-  renderScreen(gameView.element);
-};
-
-gameView.onAnswer = (correctness, time) => {
-  game.onAnswer(correctness, time);
+  renderGame();
 };
 
 game.onGameStateUpdate = () => {
-  const updatedView = new GameView(game);
-  renderScreen(updatedView.element);
-
-  updatedView.onAnswer = (correctness, time) => {
-    game.onAnswer(correctness, time);
-  };
+  renderGame();
 };
 
 game.onGameOver = () => {

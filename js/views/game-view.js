@@ -125,7 +125,17 @@ export default class GameView extends AbstractView {
 
   onAnswer() {};
 
+  onGoHomeClick() {};
+
   bind() {
+    const goHome = this.element.querySelector(`.back`);
+
+    goHome.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+
+      this.onGoHomeClick();
+    });
+
     switch (this.question.type) {
       case (questionType.GUESS_ONE):
         return this.bindOneImageQuestion();
