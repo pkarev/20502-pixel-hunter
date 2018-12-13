@@ -1,11 +1,11 @@
 import renderScreen from "./render-screen";
 
-import IntroView from "./intro-view";
-import GreetingView from "./greeting-view";
-import RulesView from "./rules-view";
+import IntroView from "./views/intro-view";
+import GreetingView from "./views/greeting-view";
+import RulesView from "./views/rules-view";
 import Game from "./game";
-import GameView from "./game-view";
-import StatsView from "./stats-view";
+import GameView from "./views/game-view";
+import StatsView from "./views/stats-view";
 
 const game = new Game();
 const introView = new IntroView();

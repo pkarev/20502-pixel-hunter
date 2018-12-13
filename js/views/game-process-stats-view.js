@@ -1,4 +1,4 @@
-import {AnswerSpeed} from "./game-utils";
+import {AnswerSpeed} from "../game-utils";
 import {AbstractView} from "./abstract-view";
 
 const getStatsClass = (answer) => {

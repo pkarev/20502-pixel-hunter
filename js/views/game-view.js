@@ -1,5 +1,5 @@
 import {AbstractView} from "./abstract-view";
-import {MAX_LIVES, questionType, validateFields} from "./game-utils";
+import {MAX_LIVES, questionType, validateFields} from "../game-utils";
 import GameProcessStatsView from "./game-process-stats-view";
 
 export default class GameView extends AbstractView {

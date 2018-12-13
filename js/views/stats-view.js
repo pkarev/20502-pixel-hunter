@@ -1,6 +1,6 @@
-import {PointsPer} from "./calculate-points";
-import {AnswerSpeed} from "./game-utils.js";
-import calculateGamePoints from "./calculate-points";
+import {PointsPer} from "../calculate-points";
+import {AnswerSpeed} from "../game-utils.js";
+import calculateGamePoints from "../calculate-points";
 import {AbstractView} from "./abstract-view";
 import GameProcessStatsView from "./game-process-stats-view";
 
