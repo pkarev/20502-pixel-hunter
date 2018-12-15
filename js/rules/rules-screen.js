@@ -1,14 +1,12 @@
+import AbstractPresenter from "../abstract-presenter";
 import RulesView from "./rules-view";
 import Router from "../router";
 
-export default class RulesScreen {
-  constructor() {
-    this._view = new RulesView();
-    this._view.onNextScreenClick = Router.showRules;
-    this._element = this._view.element;
-  }
+const rulesView = new RulesView();
 
-  get element() {
-    return this._element;
+export default class IntroScreen extends AbstractPresenter {
+  constructor() {
+    super(rulesView);
+    this._view.onNextScreenClick = Router.showIntro;
   }
 }

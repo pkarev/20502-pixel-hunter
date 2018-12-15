@@ -1,14 +1,11 @@
+import AbstractPresenter from "../abstract-presenter";
 import IntroView from "./intro-view";
 import Router from "../router";
+const introView = new IntroView();
 
-export default class IntroScreen {
+export default class IntroScreen extends AbstractPresenter {
   constructor() {
-    this._view = new IntroView();
+    super(introView);
     this._view.onNextScreenClick = Router.showGreeting;
-    this._element = this._view.element;
-  }
-
-  get element() {
-    return this._element;
   }
 }
