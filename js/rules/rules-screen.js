@@ -7,6 +7,6 @@ const rulesView = new RulesView();
 export default class IntroScreen extends AbstractPresenter {
   constructor() {
     super(rulesView);
-    this._view.onNextScreenClick = Router.showIntro;
+    this._view.onNextScreenClick = Router.showGame;
   }
 }

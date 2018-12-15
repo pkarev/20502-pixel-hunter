@@ -1,8 +1,8 @@
 import {PointsPer} from "../calculate-points";
-import {AnswerSpeed} from "../game-utils.js";
+import {AnswerSpeed} from "../game/game-utils.js";
 import calculateGamePoints from "../calculate-points";
 import {AbstractView} from "./abstract-view";
-import GameProcessStatsView from "./game-process-stats-view";
+import StatsView from "../game/game-stats-view";
 
 const StatsTitle = {
   WIN: `Победа!`,
@@ -14,7 +14,7 @@ const getStatsTitle = (result) => {
 };
 
 
-export default class StatsView extends AbstractView {
+export default class ScoresView extends AbstractView {
   constructor(game) {
     super();
     this.game = game;
@@ -26,7 +26,7 @@ export default class StatsView extends AbstractView {
   }
 
   get gameProcessStatsTemplate() {
-    const gameProcessStatsView = new GameProcessStatsView(this.game);
+    const gameProcessStatsView = new StatsView(this.game);
     return gameProcessStatsView.template;
   }
 

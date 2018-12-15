@@ -1,9 +1,9 @@
 import GreetingScreen from "./greeting/greeting-screen";
 import IntroScreen from "./intro/intro-screen";
 import RulesScreen from "./rules/rules-screen";
+import GameScreen from "./game/game-screen";
 
 const main = document.querySelector('#main');
-
 const renderScreen = (contentElement) => {
   main.innerHTML = ``;
   main.appendChild(contentElement);
@@ -24,5 +24,11 @@ export default class Router {
   static showRules() {
     const rules = new RulesScreen();
     renderScreen(rules.element);
+  }
+
+  static showGame() {
+    const game = new GameScreen();
+    renderScreen(game.element);
+    game.startGame();
   }
 }
