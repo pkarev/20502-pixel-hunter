@@ -1,4 +1,4 @@
-import {AbstractView} from "./abstract-view";
+import {AbstractView} from "../views/abstract-view";
 
 export default class RulesView extends AbstractView {
   get template() {
