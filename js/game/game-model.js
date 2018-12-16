@@ -1,4 +1,4 @@
-import {INITIAL_GAME_STATE, changeLevel} from "./game-utils";
+import {INITIAL_GAME_STATE, changeLevel, TIME_PER_QUESTION, Timer} from "./game-utils";
 import {mockQuestions} from "../questions.mock";
 
 export default class GameModel {
@@ -8,6 +8,7 @@ export default class GameModel {
 
   restart() {
     this._state = INITIAL_GAME_STATE;
+    this._timer = new Timer(TIME_PER_QUESTION);
     this._answers = [];
     this._questions = mockQuestions;
   }

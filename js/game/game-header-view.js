@@ -2,9 +2,10 @@ import {AbstractView} from "../views/abstract-view";
 import {MAX_LIVES} from "./game-utils";
 
 export default class HeaderView extends AbstractView {
-  constructor(state) {
+  constructor(model) {
     super();
-    this._state = state;
+    this._state = model._state;
+    this._timer = model._timer;
   }
 
   get template() {
@@ -19,7 +20,7 @@ export default class HeaderView extends AbstractView {
             <use xlink:href="img/sprite.svg#logo-small"></use>
           </svg>
         </button>
-        <div class="game__timer">${this._state.time}</div>
+        <div class="game__timer">${this._timer.time}</div>
         <div class="game__lives">
           ${new Array(MAX_LIVES - this._state.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
           ${new Array(this._state.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}

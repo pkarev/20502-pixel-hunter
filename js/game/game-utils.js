@@ -5,7 +5,6 @@ export const TIME_PER_QUESTION = 30;
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
   level: 0,
-  time: TIME_PER_QUESTION,
   isGameOver: false,
   isWin: true,
 });
