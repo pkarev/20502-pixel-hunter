@@ -1,3 +1,3 @@
-import Router from "./router";
+import Application from "./application";
 
-Router.showIntro();
+Application.showIntro();

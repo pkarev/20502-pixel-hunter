@@ -9,7 +9,7 @@ const renderScreen = (contentElement) => {
   main.appendChild(contentElement);
 };
 
-export default class Router {
+export default class Application {
 
   static showIntro() {
     const intro = new IntroScreen();
