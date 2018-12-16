@@ -1,12 +1,11 @@
-import GameModel from "./game-model";
 import HeaderView from "./game-header-view";
 import LevelView from "./game-level-view";
+import Application from "../application";
 
 const ONE_SECOND = 1000;
-const gameModel = new GameModel();
 
 export default class GameScreen {
-  constructor() {
+  constructor(gameModel) {
     this.model = gameModel;
     this.header = new HeaderView(this.model);
     this.level = new LevelView(this.model);
@@ -29,7 +28,7 @@ export default class GameScreen {
     if (this.model._timer.time) {
       this._timer = setTimeout(() => this._tick(), ONE_SECOND);
     } else {
-      console.log(`time is over`);
+      this.answer(undefined);
     }
   }
 
@@ -62,5 +61,40 @@ export default class GameScreen {
     this._timer = setTimeout(() => this._tick(), ONE_SECOND);
   }
 
-  answer() {}
+  stopGame() {
+    clearTimeout(this._timer);
+  }
+
+  answer(isCorrect) {
+    this.stopGame();
+    switch (isCorrect) {
+      case undefined:
+        this.model.newUndefinedAnswer();
+        break;
+      case true:
+        this.model.newAnswer(isCorrect);
+        break;
+      case false:
+        this.model.newAnswer(isCorrect);
+        if (this.model.lives) {
+          this.model.reduceLives();
+        } else {
+          this.model.loose();
+          Application.showScores(this.model);
+        }
+        break;
+      default:
+        throw new Error(`Wrong answer value`);
+    }
+
+    if (!this.model.hasNextLevel) {
+      Application.showScores(this.model);
+      return;
+    }
+
+    this.model.nextLevel();
+    this.model._timer.reset();
+    this.startGame();
+  }
+
 }

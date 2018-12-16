@@ -1,24 +1,6 @@
 import {AbstractView} from "../views/abstract-view";
-import {AnswerSpeed, QuestionType, validateFields} from "./game-utils";
+import {QuestionType, validateFields} from "./game-utils";
 import StatsView from "./game-stats-view";
-
-
-export const getStatsClass = (answer) => {
-  if (!answer.isCorrect) {
-    return `wrong`;
-  }
-
-  switch (answer.speed) {
-    case AnswerSpeed.FAST:
-      return `fast`;
-    case AnswerSpeed.NORMAL:
-      return `normal`;
-    case AnswerSpeed.SLOW:
-      return `slow`;
-    default:
-      return ``;
-  }
-};
 
 export default class LevelView extends AbstractView {
   constructor(model) {
@@ -140,7 +122,7 @@ export default class LevelView extends AbstractView {
       option.addEventListener(`change`, (evt) => {
         const isPainting = evt.target.value === `paint`;
         const isCorrect = isPainting === this.question.images[0].isPainting;
-        this.onAnswer(isCorrect, this.time);
+        this.onAnswer(isCorrect);
       });
     });
   }
@@ -153,8 +135,13 @@ export default class LevelView extends AbstractView {
         const isPainting = evt.target.value === `paint`;
         const isCorrect = isPainting === this.question.images[evt.target.dataset.imageIndex].isPainting;
 
-        if (isAllOptionsChosen || !isCorrect) {
-          this.onAnswer(isCorrect, this.time);
+        if (!isCorrect && !isAllOptionsChosen) {
+          this.onAnswer(isCorrect);
+          return;
+        }
+
+        if (isAllOptionsChosen) {
+          this.onAnswer(isCorrect);
         }
       });
     });
@@ -171,7 +158,7 @@ export default class LevelView extends AbstractView {
           isCorrect = this.question.images[evt.target.dataset.imageIndex].isPainting === false;
         }
 
-        this.onAnswer(isCorrect, this.time);
+        this.onAnswer(isCorrect);
       });
     });
   }

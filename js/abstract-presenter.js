@@ -7,4 +7,8 @@ export default class AbstractPresenter {
   get element() {
     return this._element;
   }
+
+  get view() {
+    return this._view;
+  }
 }

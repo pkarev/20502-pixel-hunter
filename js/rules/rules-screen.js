@@ -1,12 +1,15 @@
 import AbstractPresenter from "../abstract-presenter";
 import RulesView from "./rules-view";
 import Application from "../application";
+import GoHomeView from "../views/go-home-view";
 
-const rulesView = new RulesView();
-
-export default class IntroScreen extends AbstractPresenter {
-  constructor() {
+export default class RulesScreen extends AbstractPresenter {
+  constructor({rulesView = new RulesView()} = {}) {
     super(rulesView);
-    this._view.onNextScreenClick = Application.showGame;
+
+    this.view.onNextScreenClick = Application.showGame;
+
+    this._goHomeView = new GoHomeView();
+    this.element.querySelector(`.header`).appendChild(this._goHomeView.element);
   }
 }

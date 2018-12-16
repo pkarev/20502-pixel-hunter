@@ -2,11 +2,9 @@ import AbstractPresenter from "../abstract-presenter";
 import GreetingView from "./greeting-view";
 import Application from "../application";
 
-const greetingView = new GreetingView();
-
 export default class IntroScreen extends AbstractPresenter {
-  constructor() {
+  constructor({greetingView = new GreetingView()} = {}) {
     super(greetingView);
-    this._view.onNextScreenClick = Application.showRules;
+    this.view.onNextScreenClick = Application.showRules;
   }
 }

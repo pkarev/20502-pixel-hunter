@@ -185,4 +185,8 @@ export class Timer {
 
     this.time -= 1;
   }
+
+  reset() {
+    this.time = TIME_PER_QUESTION;
+  }
 }

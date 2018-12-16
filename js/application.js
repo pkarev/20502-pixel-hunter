@@ -2,6 +2,8 @@ import GreetingScreen from "./greeting/greeting-screen";
 import IntroScreen from "./intro/intro-screen";
 import RulesScreen from "./rules/rules-screen";
 import GameScreen from "./game/game-screen";
+import ScoresScreen from "./scores/scores-screen";
+import GameModel from "./game/game-model";
 
 const main = document.querySelector('#main');
 const renderScreen = (contentElement) => {
@@ -26,9 +28,15 @@ export default class Application {
     renderScreen(rules.element);
   }
 
-  static showGame() {
-    const game = new GameScreen();
+  static showGame(userName) {
+    const model = new GameModel(userName);
+    const game = new GameScreen(model);
     renderScreen(game.element);
     game.startGame();
+  }
+
+  static showScores(model) {
+    const scores = new ScoresScreen(model);
+    renderScreen(scores.element);
   }
 }
