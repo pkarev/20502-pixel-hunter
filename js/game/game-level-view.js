@@ -1,50 +1,38 @@
-import {AbstractView} from "./abstract-view";
-import {MAX_LIVES, questionType, validateFields} from "../game-utils";
-import GameProcessStatsView from "./game-process-stats-view";
+import {AbstractView} from "../views/abstract-view";
+import {QuestionType, validateFields} from "./game-utils";
+import StatsView from "./game-stats-view";
 
-export default class GameView extends AbstractView {
-  constructor(game) {
+export default class LevelView extends AbstractView {
+  constructor(model) {
     super();
-    this.game = game;
-    this.lives = game.state.lives;
-    this.time = game.state.time;
-    this.level = game.state.level;
-    this.question = game.questions[game.state.level];
-    this.answers = game.answers;
+    this.question = model.currentQuestion;
+    this.answers = model._answers;
   }
 
   get template() {
     return `
-      <header class="header">
-        ${this.headerTemplate}
-      </header>
       <section class="game">
         ${this.questionTemplate}
-        ${this.gameProcessStatsTemplate}
+        ${this.statsTemplate}
       </section>
     `;
   }
 
-  get gameProcessStatsTemplate() {
-    const gameProcessStatsView = new GameProcessStatsView(this.game);
-    return gameProcessStatsView.template;
-  }
-
   get questionTemplate() {
     switch (this.question.type) {
-      case (questionType.GUESS_ONE):
+      case (QuestionType.GUESS_ONE):
         return `
           ${this.questionOneImageTemplate}
         `;
-      case (questionType.GUESS_TWO):
+      case (QuestionType.GUESS_TWO):
         return `
           ${this.questionTwoImagesTemplate}
         `;
-      case (questionType.FIND_PAINTING):
+      case (QuestionType.FIND_PAINTING):
         return `
           ${this.questionThreeImagesTemplate}
         `;
-      case (questionType.FIND_PHOTO):
+      case (QuestionType.FIND_PHOTO):
         return `
           ${this.questionThreeImagesTemplate}
         `;
@@ -53,23 +41,9 @@ export default class GameView extends AbstractView {
     }
   }
 
-  get headerTemplate() {
-    return `
-      <button class="back">
-        <span class="visually-hidden">Вернуться к началу</span>
-        <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
-          <use xlink:href="img/sprite.svg#arrow-left"></use>
-        </svg>
-        <svg class="icon" width="101" height="44" viewBox="0 0 101 44" fill="#000000">
-          <use xlink:href="img/sprite.svg#logo-small"></use>
-        </svg>
-      </button>
-      <div class="game__timer">${this.time}</div>
-      <div class="game__lives">
-        ${new Array(MAX_LIVES - this.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
-        ${new Array(this.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`).join(``)}
-      </div>  
-    `;
+  get statsTemplate() {
+    const statsView = new StatsView(this.answers);
+    return statsView.template;
   }
 
   get questionOneImageTemplate() {
@@ -125,27 +99,16 @@ export default class GameView extends AbstractView {
     `;
   }
 
-  onAnswer() {}
-
-  onGoHomeClick() {}
-
   bind() {
-    const goHome = this.element.querySelector(`.back`);
-
-    goHome.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-
-      this.onGoHomeClick();
-    });
 
     switch (this.question.type) {
-      case (questionType.GUESS_ONE):
+      case (QuestionType.GUESS_ONE):
         return this.bindOneImageQuestion();
-      case (questionType.GUESS_TWO):
+      case (QuestionType.GUESS_TWO):
         return this.bindTwoImagesQuestion();
-      case (questionType.FIND_PHOTO):
+      case (QuestionType.FIND_PHOTO):
         return this.bindThreeImagesQuestion();
-      case (questionType.FIND_PAINTING):
+      case (QuestionType.FIND_PAINTING):
         return this.bindThreeImagesQuestion();
       default:
         return null;
@@ -159,7 +122,7 @@ export default class GameView extends AbstractView {
       option.addEventListener(`change`, (evt) => {
         const isPainting = evt.target.value === `paint`;
         const isCorrect = isPainting === this.question.images[0].isPainting;
-        this.onAnswer(isCorrect, this.time);
+        this.onAnswer(isCorrect);
       });
     });
   }
@@ -172,8 +135,13 @@ export default class GameView extends AbstractView {
         const isPainting = evt.target.value === `paint`;
         const isCorrect = isPainting === this.question.images[evt.target.dataset.imageIndex].isPainting;
 
-        if (isAllOptionsChosen || !isCorrect) {
-          this.onAnswer(isCorrect, this.time);
+        if (!isCorrect && !isAllOptionsChosen) {
+          this.onAnswer(isCorrect);
+          return;
+        }
+
+        if (isAllOptionsChosen) {
+          this.onAnswer(isCorrect);
         }
       });
     });
@@ -184,13 +152,13 @@ export default class GameView extends AbstractView {
     gameOptions.forEach((option) => {
       option.addEventListener(`click`, (evt) => {
         let isCorrect;
-        if (this.question.type === questionType.FIND_PAINTING) {
+        if (this.question.type === QuestionType.FIND_PAINTING) {
           isCorrect = this.question.images[evt.target.dataset.imageIndex].isPainting === true;
         } else {
           isCorrect = this.question.images[evt.target.dataset.imageIndex].isPainting === false;
         }
 
-        this.onAnswer(isCorrect, this.time);
+        this.onAnswer(isCorrect);
       });
     });
   }

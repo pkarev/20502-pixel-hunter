@@ -1,19 +1,9 @@
-import {AbstractView} from "./abstract-view";
+import {AbstractView} from "../views/abstract-view";
 
 export default class RulesView extends AbstractView {
   get template() {
     return `
-      <header class="header">
-        <button class="back">
-          <span class="visually-hidden">Вернуться к началу</span>
-          <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
-            <use xlink:href="img/sprite.svg#arrow-left"></use>
-          </svg>
-          <svg class="icon" width="101" height="44" viewBox="0 0 101 44" fill="#000000">
-            <use xlink:href="img/sprite.svg#logo-small"></use>
-          </svg>
-        </button>
-      </header>
+      <header class="header"></header>
       <section class="rules">
         <h2 class="rules__title">Правила</h2>
         <ul class="rules__description">
@@ -41,7 +31,6 @@ export default class RulesView extends AbstractView {
     const element = this._element;
     const rulesScreenNext = element.querySelector(`.rules__button`);
     const playerName = element.querySelector(`.rules__input`);
-    const goHome = element.querySelector(`.back`);
 
     const onPlayerNameInput = (evt) => {
       if (evt.target.value) {
@@ -63,14 +52,7 @@ export default class RulesView extends AbstractView {
 
     rulesScreenNext.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-
-      this.onNextScreenClick();
-    });
-
-    goHome.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-
-      this.onGoHomeClick();
+      this.onNextScreenClick(playerName.value);
     });
   }
 }

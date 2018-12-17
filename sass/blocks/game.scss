@@ -5,6 +5,12 @@
 @import "../variables/colors";
 @import "../mixins/text";
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .game {
   display: flex;
   flex-direction: column;
@@ -16,6 +22,10 @@
   @include bold-text;
   font-size: 60px;
   line-height: 45px;
+
+  &--blinking {
+    animation: blinker 1s linear infinite;
+  }
 }
 
 .game__task {

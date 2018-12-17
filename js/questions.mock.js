@@ -1,4 +1,4 @@
-import {questionType, questionTypeToTask} from "./game-utils";
+import {QuestionType, QuestionTypeToTask} from "./game/game-utils";
 
 const paintings = [
   {
@@ -48,20 +48,20 @@ const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)]
 class MockQuestion {
   constructor(type, images) {
     this.type = type;
-    this.task = questionTypeToTask[type];
+    this.task = QuestionTypeToTask[type];
     this.images = images;
   }
 }
 
 export const mockQuestions = getShuffledCopy([
-  new MockQuestion(questionType.GUESS_ONE, [getRandomItem(allImages)]),
-  new MockQuestion(questionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
-  new MockQuestion(questionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
-  new MockQuestion(questionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
-  new MockQuestion(questionType.GUESS_ONE, [getRandomItem(allImages)]),
-  new MockQuestion(questionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
-  new MockQuestion(questionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
-  new MockQuestion(questionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
-  new MockQuestion(questionType.GUESS_ONE, [getRandomItem(allImages)]),
-  new MockQuestion(questionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
+  new MockQuestion(QuestionType.GUESS_ONE, [getRandomItem(allImages)]),
+  new MockQuestion(QuestionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
+  new MockQuestion(QuestionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
+  new MockQuestion(QuestionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
+  new MockQuestion(QuestionType.GUESS_ONE, [getRandomItem(allImages)]),
+  new MockQuestion(QuestionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
+  new MockQuestion(QuestionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
+  new MockQuestion(QuestionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
+  new MockQuestion(QuestionType.GUESS_ONE, [getRandomItem(allImages)]),
+  new MockQuestion(QuestionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
 ]);

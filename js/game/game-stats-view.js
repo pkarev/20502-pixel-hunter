@@ -1,7 +1,11 @@
-import {AnswerSpeed} from "../game-utils";
-import {AbstractView} from "./abstract-view";
+import {AbstractView} from "../views/abstract-view";
+import {AnswerSpeed} from "./game-utils";
 
 const getStatsClass = (answer) => {
+  if (answer.isCorrect === undefined) {
+    return `unknown`;
+  }
+
   if (!answer.isCorrect) {
     return `wrong`;
   }
@@ -10,7 +14,7 @@ const getStatsClass = (answer) => {
     case AnswerSpeed.FAST:
       return `fast`;
     case AnswerSpeed.NORMAL:
-      return `normal`;
+      return `correct`;
     case AnswerSpeed.SLOW:
       return `slow`;
     default:
@@ -18,10 +22,10 @@ const getStatsClass = (answer) => {
   }
 };
 
-export default class GameProcessStatsView extends AbstractView {
-  constructor(game) {
+export default class StatsView extends AbstractView {
+  constructor(answers) {
     super();
-    this.answers = game.answers;
+    this.answers = answers;
   }
 
   get template() {
