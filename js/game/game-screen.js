@@ -1,8 +1,7 @@
 import HeaderView from "./game-header-view";
 import LevelView from "./game-level-view";
 import Application from "../application";
-
-const ONE_SECOND = 1000;
+import {ONE_SECOND, TIME_START_BLINKING} from "./game-utils";
 
 export default class GameScreen {
   constructor(gameModel) {
@@ -15,6 +14,7 @@ export default class GameScreen {
     this.root.appendChild(this.level.element);
 
     this._timer = null;
+
   }
 
   get element() {
@@ -23,7 +23,12 @@ export default class GameScreen {
 
   _tick() {
     this.model._timer.tick();
-    this.updateTime();
+
+    if (this.model._timer.time === TIME_START_BLINKING) {
+      this.updateHeader();
+    } else {
+      this.updateTime();
+    }
 
     if (this.model._timer.time) {
       this._timer = setTimeout(() => this._tick(), ONE_SECOND);
@@ -96,5 +101,4 @@ export default class GameScreen {
     this.model._timer.reset();
     this.startGame();
   }
-
 }

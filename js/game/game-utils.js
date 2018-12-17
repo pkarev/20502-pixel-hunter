@@ -1,6 +1,8 @@
 export const MAX_LIVES = 3;
 export const MAX_LEVELS = 10;
 export const TIME_PER_QUESTION = 30;
+export const TIME_START_BLINKING = 5;
+export const ONE_SECOND = 1000;
 
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
@@ -167,14 +169,6 @@ export class Timer {
   }
 
   set time(value) {
-    if (value <= 5) {
-      this.status = `blinking`;
-    }
-
-    if (value === 0) {
-      this.status = `time is over`;
-    }
-
     this._time = value;
   }
 

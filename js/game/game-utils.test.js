@@ -97,23 +97,6 @@ describe(`Timer`, () => {
     assert.equal(testTimer.time, 97);
   });
 
-  it(`must change timer status`, () => {
-    const testTimer = new Timer(6);
-    assert.equal(testTimer.status, ``);
-    testTimer.tick();
-    assert.equal(testTimer.time, 5);
-    assert.equal(testTimer.status, `blinking`);
-    testTimer.tick();
-    testTimer.tick();
-    testTimer.tick();
-    testTimer.tick();
-    assert.equal(testTimer.time, 1);
-    assert.equal(testTimer.status, `blinking`);
-    testTimer.tick();
-    assert.equal(testTimer.time, 0);
-    assert.equal(testTimer.status, `time is over`);
-  });
-
   it(`must not set negative time after the time is over`, () => {
     const testTimer = new Timer(1);
     testTimer.tick();
