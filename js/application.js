@@ -1,9 +1,9 @@
-import GreetingScreen from "./greeting/greeting-screen";
-import IntroScreen from "./intro/intro-screen";
-import RulesScreen from "./rules/rules-screen";
-import GameScreen from "./game/game-screen";
-import ScoresScreen from "./scores/scores-screen";
-import GameModel from "./game/game-model";
+import GreetingScreen from "./screens/greeting-screen";
+import IntroScreen from "./screens/intro-screen";
+import RulesScreen from "./screens/rules-screen";
+import GameScreen from "./screens/game-screen";
+import ScoresScreen from "./screens/scores-screen";
+import GameModel from "./models/game-model";
 
 const main = document.querySelector('#main');
 const renderScreen = (contentElement) => {

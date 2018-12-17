@@ -1,4 +1,4 @@
-import {AbstractView} from "../views/abstract-view";
+import {AbstractView} from "../utils/abstract-view";
 import Application from "../application";
 
 export default class GoHomeView extends AbstractView {

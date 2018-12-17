@@ -1,4 +1,4 @@
-import {QuestionType, QuestionTypeToTask} from "./game/game-utils";
+import {QuestionType, QuestionTypeToTask} from "./game";
 
 const paintings = [
   {

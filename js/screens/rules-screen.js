@@ -1,5 +1,5 @@
-import AbstractPresenter from "../abstract-presenter";
-import RulesView from "./rules-view";
+import AbstractPresenter from "../utils/abstract-presenter";
+import RulesView from "../views/rules-view";
 import Application from "../application";
 import GoHomeView from "../views/go-home-view";
 

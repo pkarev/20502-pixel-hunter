@@ -1,5 +1,5 @@
-import AbstractPresenter from "../abstract-presenter";
-import IntroView from "./intro-view";
+import AbstractPresenter from "../utils/abstract-presenter";
+import IntroView from "../views/intro-view";
 import Application from "../application";
 
 export default class IntroScreen extends AbstractPresenter {

@@ -1,5 +1,5 @@
-import AbstractPresenter from "../abstract-presenter";
-import ScoresView from "./scores-view";
+import AbstractPresenter from "../utils/abstract-presenter";
+import ScoresView from "../views/scores-view";
 import Application from "../application";
 
 export default class ScoresScreen extends AbstractPresenter {

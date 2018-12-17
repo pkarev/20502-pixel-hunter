@@ -6,8 +6,8 @@ import {
   Answer,
   changeLevel,
   changeLives,
-} from "./game-utils";
-import {mockQuestions} from "../questions.mock";
+} from "../utils/game";
+import {mockQuestions} from "../utils/questions.mock";
 
 export default class GameModel {
   constructor(userName) {

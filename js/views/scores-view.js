@@ -1,7 +1,7 @@
-import {AnswerSpeed} from "../game/game-utils.js";
-import {AbstractView} from "../views/abstract-view";
-import StatsView from "../game/game-stats-view";
-import {calculateGamePoints, PointsPer} from "../game/game-utils";
+import {AnswerSpeed} from "../utils/game.js";
+import {AbstractView} from "../utils/abstract-view";
+import StatsView from "./game-stats-view";
+import {calculateGamePoints, PointsPer} from "../utils/game";
 
 const StatsTitle = {
   WIN: `Победа!`,

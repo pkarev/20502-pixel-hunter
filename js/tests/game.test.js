@@ -7,7 +7,7 @@ import {
   changeLevel,
   changeLives,
   Timer
-} from './game-utils';
+} from '../utils/game';
 const Answer = function (isCorrect, speed) {
   this.isCorrect = isCorrect;
   this.speed = speed;
