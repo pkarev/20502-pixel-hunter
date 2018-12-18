@@ -1,4 +1,4 @@
-import {AbstractView} from "../utils/abstract-view";
+import AbstractView from "../utils/abstract-view";
 import StatsView from "./game-stats-view";
 import {ANSWERS_NORMAL_LENGTH, AnswerType, calculateGamePoints, PointsPer} from "../utils/game";
 

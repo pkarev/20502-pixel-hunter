@@ -1,10 +1,10 @@
 import {assert} from 'chai';
+import Timer from "../utils/game";
 import {
   INITIAL_GAME_STATE,
   calculateGamePoints,
   changeLevel,
   changeLives,
-  Timer
 } from '../utils/game';
 
 const TEST_ANSWERS = {

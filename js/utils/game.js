@@ -131,7 +131,7 @@ export const AnswerType = {
   FAST: `fast`
 };
 
-export class Timer {
+export default class Timer {
   constructor(time) {
     if (typeof time !== `number`) {
       throw new Error(`Initial time must be a number`);

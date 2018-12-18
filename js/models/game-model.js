@@ -1,8 +1,8 @@
+import Timer from "../utils/game";
 import {
   INITIAL_GAME_STATE,
   MAX_LEVELS,
   TIME_PER_QUESTION,
-  Timer,
   changeLevel,
   changeLives, AnswerBreakPoint, AnswerType,
 } from "../utils/game";

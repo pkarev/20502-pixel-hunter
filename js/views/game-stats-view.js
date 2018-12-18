@@ -1,4 +1,4 @@
-import {AbstractView} from "../utils/abstract-view";
+import AbstractView from "../utils/abstract-view";
 import {AnswerType} from "../utils/game";
 
 const getStatsClass = (answer) => {

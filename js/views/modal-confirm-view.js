@@ -1,4 +1,4 @@
-import {AbstractView} from "../utils/abstract-view";
+import AbstractView from "../utils/abstract-view";
 
 export default class ModalConfirmView extends AbstractView {
   get template() {
