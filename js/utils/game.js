@@ -27,12 +27,6 @@ const KeyCode = {
   RIGHT_ARROW: 39
 };
 
-export const Question = {
-  GUESS_ONE: `tinder-like`,
-  GUESS_TWO: `two-of-two`,
-  GUESS_THREE: `one-of-three`,
-};
-
 export const ImageType = {
   PAINTING: `painting`,
   PHOTO: `photo`

@@ -1,5 +1,5 @@
 import {AbstractView} from "../utils/abstract-view";
-import {ImageType, Question, QuestionTask, validateFields} from "../utils/game";
+import {ImageType, QuestionTask, validateFields} from "../utils/game";
 import StatsView from "./game-stats-view";
 
 export default class LevelView extends AbstractView {
