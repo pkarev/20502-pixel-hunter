@@ -7,19 +7,18 @@ import {
   changeLevel,
   changeLives,
 } from "../utils/game";
-import {mockQuestions} from "../utils/questions.mock";
 
 export default class GameModel {
-  constructor(userName) {
+  constructor(gameQuestions, userName) {
     this.restart();
     this._userName = userName;
+    this._questions = gameQuestions;
   }
 
   restart() {
     this._state = Object.assign({}, INITIAL_GAME_STATE);
     this._timer = new Timer(TIME_PER_QUESTION);
     this._answers = [];
-    this._questions = mockQuestions;
   }
 
   get currentQuestion() {
@@ -40,6 +39,10 @@ export default class GameModel {
 
   get hasNextLevel() {
     return this._state.level < MAX_LEVELS - 1;
+  }
+
+  get playerName() {
+    return this._userName;
   }
 
   loose() {

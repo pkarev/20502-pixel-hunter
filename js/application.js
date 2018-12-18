@@ -4,7 +4,6 @@ import RulesScreen from "./screens/rules-screen";
 import GameScreen from "./screens/game-screen";
 import ScoresScreen from "./screens/scores-screen";
 import GameModel from "./models/game-model";
-import DataLoadErrorView from "./views/data-load-error-view";
 import DataLoadErrorScreen from "./screens/data-load-error-screen";
 
 const main = document.querySelector('#main');
@@ -22,12 +21,15 @@ const checkStatus = (response) => {
   }
 };
 
+let gameQuestions;
 
 export default class Application {
 
   static start() {
-    window.fetch(` https://es.dump.academy/pixel-hunter/questionsdfgs`).
+    window.fetch(` https://es.dump.academy/pixel-hunter/questions`).
       then(checkStatus).
+      then((response) => response.json()).
+      then((data) => gameQuestions = data).
       then((response) => Application.showIntro())
       .catch(Application.showError);
   }
@@ -48,13 +50,14 @@ export default class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName);
+    const model = new GameModel(gameQuestions, userName);
     const game = new GameScreen(model);
     renderScreen(game.element);
     game.startGame();
   }
 
   static showScores(model) {
+    const playerName = model.playerName;
     const scores = new ScoresScreen(model);
     renderScreen(scores.element);
   }

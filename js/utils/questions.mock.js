@@ -1,4 +1,4 @@
-import {QuestionType, QuestionTypeToTask} from "./game";
+import {Question, QuestionTask} from "./game";
 
 const paintings = [
   {
@@ -48,20 +48,20 @@ const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)]
 class MockQuestion {
   constructor(type, images) {
     this.type = type;
-    this.task = QuestionTypeToTask[type];
+    this.task = QuestionTask[type];
     this.images = images;
   }
 }
 
 export const mockQuestions = getShuffledCopy([
-  new MockQuestion(QuestionType.GUESS_ONE, [getRandomItem(allImages)]),
-  new MockQuestion(QuestionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
-  new MockQuestion(QuestionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
-  new MockQuestion(QuestionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
-  new MockQuestion(QuestionType.GUESS_ONE, [getRandomItem(allImages)]),
-  new MockQuestion(QuestionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
-  new MockQuestion(QuestionType.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
-  new MockQuestion(QuestionType.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
-  new MockQuestion(QuestionType.GUESS_ONE, [getRandomItem(allImages)]),
-  new MockQuestion(QuestionType.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
+  new MockQuestion(Question.GUESS_ONE, [getRandomItem(allImages)]),
+  new MockQuestion(Question.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
+  new MockQuestion(Question.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
+  new MockQuestion(Question.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
+  new MockQuestion(Question.GUESS_ONE, [getRandomItem(allImages)]),
+  new MockQuestion(Question.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
+  new MockQuestion(Question.FIND_PHOTO, getShuffledCopy(photos).slice(0, 3)),
+  new MockQuestion(Question.FIND_PAINTING, getShuffledCopy(paintings).slice(0, 3)),
+  new MockQuestion(Question.GUESS_ONE, [getRandomItem(allImages)]),
+  new MockQuestion(Question.GUESS_TWO, getShuffledCopy(allImages).slice(0, 2)),
 ]);
