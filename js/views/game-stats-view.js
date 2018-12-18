@@ -1,24 +1,18 @@
 import {AbstractView} from "../utils/abstract-view";
-import {AnswerSpeed} from "../utils/game";
+import {AnswerType} from "../utils/game";
 
 const getStatsClass = (answer) => {
-  if (answer.isCorrect === undefined) {
-    return `unknown`;
-  }
-
-  if (!answer.isCorrect) {
-    return `wrong`;
-  }
-
-  switch (answer.speed) {
-    case AnswerSpeed.FAST:
-      return `fast`;
-    case AnswerSpeed.NORMAL:
+  switch (answer) {
+    case (AnswerType.CORRECT):
       return `correct`;
-    case AnswerSpeed.SLOW:
+    case (AnswerType.WRONG):
+      return `wrong`;
+    case (AnswerType.FAST):
+      return `fast`;
+    case (AnswerType.SLOW):
       return `slow`;
     default:
-      return ``;
+      return `undefined`;
   }
 };
 

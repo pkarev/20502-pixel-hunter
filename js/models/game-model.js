@@ -3,9 +3,8 @@ import {
   MAX_LEVELS,
   TIME_PER_QUESTION,
   Timer,
-  Answer,
   changeLevel,
-  changeLives,
+  changeLives, AnswerBreakPoint, AnswerType,
 } from "../utils/game";
 
 export default class GameModel {
@@ -45,6 +44,10 @@ export default class GameModel {
     return this._userName;
   }
 
+  get time() {
+    return this._timer.time;
+  }
+
   loose() {
     this._state.isWin = false;
   }
@@ -57,11 +60,29 @@ export default class GameModel {
     this._state = changeLives(this._state, this.lives - 1);
   }
 
-  newAnswer(answer) {
-    this._answers.push(new Answer(answer, this._timer.time));
+  addNewAnswer(isCorrect) {
+    this._answers.push(this.getAnswer(isCorrect));
   }
 
-  newUndefinedAnswer() {
-    this._answers.push({});
+  getAnswer(isCorrect) {
+    let answer;
+
+    if (this.time > AnswerBreakPoint.IS_FAST) {
+      answer = AnswerType.FAST;
+    }
+
+    if (this.time >= AnswerBreakPoint.IS_SLOW && this.time <= AnswerBreakPoint.IS_FAST) {
+      answer = AnswerType.CORRECT;
+    }
+
+    if (this.time < AnswerBreakPoint.IS_SLOW) {
+      answer = AnswerType.SLOW;
+    }
+
+    if (!isCorrect || undefined) {
+      answer = AnswerType.WRONG;
+    }
+
+    return answer;
   }
 }

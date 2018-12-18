@@ -83,14 +83,14 @@ export const calculateGamePoints = (answers, livesLeft) => {
   }
 
   for (const answer of answers) {
-    if (answer.isCorrect) {
+    if (answer === AnswerType.CORRECT) {
       points += PointsPer.CORRECT_ANSWER;
     }
-    if (answer.speed === AnswerSpeed.FAST) {
-      points += PointsPer.FAST_ANSWER;
+    if (answer === AnswerType.FAST) {
+      points += PointsPer.FAST_ANSWER + PointsPer.CORRECT_ANSWER;
     }
-    if (answer.speed === AnswerSpeed.SLOW) {
-      points += PointsPer.SLOW_ANSWER;
+    if (answer === AnswerType.SLOW) {
+      points += PointsPer.SLOW_ANSWER + PointsPer.CORRECT_ANSWER;
     }
   }
 
@@ -129,25 +129,12 @@ export const changeLives = (gameState, lives) => {
   return newGameState;
 };
 
-export class Answer {
-  constructor(correctness, time) {
-    this.isCorrect = correctness;
-
-    if (this.isCorrect) {
-      if (time > AnswerBreakPoint.IS_FAST) {
-        this.speed = `fast`;
-      }
-
-      if (time >= AnswerBreakPoint.IS_SLOW && time <= AnswerBreakPoint.IS_FAST) {
-        this.speed = `normal`;
-      }
-
-      if (time < AnswerBreakPoint.IS_SLOW) {
-        this.speed = `slow`;
-      }
-    }
-  }
-}
+export const AnswerType = {
+  CORRECT: `correct`,
+  WRONG: `wrong`,
+  SLOW: `slow`,
+  FAST: `fast`
+};
 
 export class Timer {
   constructor(time) {

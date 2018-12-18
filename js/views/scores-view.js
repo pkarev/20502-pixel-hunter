@@ -1,7 +1,6 @@
-import {AnswerSpeed} from "../utils/game.js";
 import {AbstractView} from "../utils/abstract-view";
 import StatsView from "./game-stats-view";
-import {calculateGamePoints, PointsPer} from "../utils/game";
+import {AnswerType, calculateGamePoints, PointsPer} from "../utils/game";
 
 const StatsTitle = {
   WIN: `Победа!`,
@@ -18,9 +17,9 @@ export default class ScoresView extends AbstractView {
     super();
     this.game = model;
     this.totalScore = calculateGamePoints(this.game._answers, this.game._state.lives);
-    this.correctAnswers = this.game._answers.filter((answer) => answer.isCorrect);
-    this.fastAnswers = this.game._answers.filter((answer) => answer.speed === AnswerSpeed.FAST);
-    this.slowAnswers = this.game._answers.filter((answer) => answer.speed === AnswerSpeed.SLOW);
+    this.correctAnswers = this.game._answers.filter((answer) => answer === AnswerType.CORRECT);
+    this.fastAnswers = this.game._answers.filter((answer) => answer === AnswerType.FAST);
+    this.slowAnswers = this.game._answers.filter((answer) => answer === AnswerType.SLOW);
     this.baseScore = this.correctAnswers.length * PointsPer.CORRECT_ANSWER;
   }
 
