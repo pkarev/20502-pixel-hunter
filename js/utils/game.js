@@ -17,15 +17,11 @@ export const AnswerBreakPoint = {
   IS_FAST: 20,
 };
 
-export const AnswerSpeed = {
-  FAST: `fast`,
-  NORMAL: `normal`,
-  SLOW: `slow`
-};
-
-const KeyCode = {
-  LEFT_ARROW: 37,
-  RIGHT_ARROW: 39
+export const AnswerType = {
+  CORRECT: `correct`,
+  WRONG: `wrong`,
+  SLOW: `slow`,
+  FAST: `fast`
 };
 
 export const ImageType = {
@@ -45,20 +41,6 @@ export const PointsPer = {
   CORRECT_ANSWER: 100,
   FAST_ANSWER: 50,
   SLOW_ANSWER: -50
-};
-
-export const isLeftArrowKeyup = (evt, action) => {
-  if (evt.keyCode !== KeyCode.LEFT_ARROW) {
-    return;
-  }
-  action();
-};
-
-export const isRightArrowKeyup = (evt, action) => {
-  if (evt.keyCode !== KeyCode.RIGHT_ARROW) {
-    return;
-  }
-  action();
 };
 
 export const validateFields = (formFields) => {
@@ -122,13 +104,6 @@ export const changeLives = (gameState, lives) => {
 
   const newGameState = Object.assign({}, gameState, {lives});
   return newGameState;
-};
-
-export const AnswerType = {
-  CORRECT: `correct`,
-  WRONG: `wrong`,
-  SLOW: `slow`,
-  FAST: `fast`
 };
 
 export default class Timer {
