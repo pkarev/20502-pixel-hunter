@@ -76,11 +76,10 @@ export default class GameScreen {
     this.model.addNewAnswer(isCorrect);
 
     if (!isCorrect) {
-      if (this.model.lives) {
-        this.model.reduceLives();
-      } else {
-        this.model.loose();
+      this.model.reduceLives();
+      if (this.model.lives < 0) {
         Application.showScores(this.model);
+        return;
       }
     }
 

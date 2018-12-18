@@ -3,6 +3,7 @@ export const MAX_LEVELS = 10;
 export const TIME_PER_QUESTION = 30;
 export const TIME_START_BLINKING = 5;
 export const ONE_SECOND = 1000;
+export const ANSWERS_NORMAL_LENGTH = 10;
 
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
@@ -38,8 +39,6 @@ export const QuestionTask = {
   GUESS_TWO: `Угадайте для каждого изображения фото или рисунок?`,
   GUESS_ONE: `Угадай, фото или рисунок?`
 };
-
-export const ANSWERS_NORMAL_LENGTH = 10;
 
 export const PointsPer = {
   LIVE_LEFT: 50,
@@ -115,10 +114,6 @@ export const changeLevel = (gameState, level) => {
 export const changeLives = (gameState, lives) => {
   if (typeof lives !== `number`) {
     throw new Error(`New game lives must be a number`);
-  }
-
-  if (lives < 0) {
-    throw new Error(`Lives can't be negative. Game over`);
   }
 
   if (lives > MAX_LIVES) {

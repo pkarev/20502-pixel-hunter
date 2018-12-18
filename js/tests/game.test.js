@@ -41,10 +41,6 @@ describe(`Change lives`, () => {
     assert.equal(changeLives(INITIAL_GAME_STATE, 3).lives, 3);
   });
 
-  it(`should no accept negative values`, () => {
-    assert.throws(() => changeLives(INITIAL_GAME_STATE, -1).lives, /Lives can't be negative. Game over/);
-  });
-
   it(`should not set lives more than allowed max lives number`, () => {
     assert.throws(() => changeLives(INITIAL_GAME_STATE, 4).lives, `Lives can't be too many`);
     assert.throws(() => changeLives(INITIAL_GAME_STATE, 100).lives, `Lives can't be too many`);

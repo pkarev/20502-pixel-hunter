@@ -4,8 +4,8 @@ import Application from "../application";
 import GoHomeView from "../views/go-home-view";
 
 export default class ScoresScreen extends AbstractPresenter {
-  constructor(model) {
-    super(new ScoresView(model));
+  constructor(gamesHistory) {
+    super(new ScoresView(gamesHistory));
 
     this._view.onGoHomeClick = Application.showIntro;
 
