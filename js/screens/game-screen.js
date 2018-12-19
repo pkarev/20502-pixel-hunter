@@ -1,7 +1,7 @@
-import HeaderView from "./game-header-view";
-import LevelView from "./game-level-view";
+import HeaderView from "../views/game-header-view";
+import LevelView from "../views/game-level-view";
 import Application from "../application";
-import {ONE_SECOND, TIME_START_BLINKING} from "./game-utils";
+import {ONE_SECOND, TIME_START_BLINKING} from "../utils/game";
 
 export default class GameScreen {
   constructor(gameModel) {

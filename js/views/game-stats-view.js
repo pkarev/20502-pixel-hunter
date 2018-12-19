@@ -1,5 +1,5 @@
-import {AbstractView} from "../views/abstract-view";
-import {AnswerSpeed} from "./game-utils";
+import {AbstractView} from "../utils/abstract-view";
+import {AnswerSpeed} from "../utils/game";
 
 const getStatsClass = (answer) => {
   if (answer.isCorrect === undefined) {

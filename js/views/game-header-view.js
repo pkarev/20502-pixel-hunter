@@ -1,6 +1,6 @@
-import {AbstractView} from "../views/abstract-view";
-import {MAX_LIVES, TIME_START_BLINKING} from "./game-utils";
-import GoHomeView from "../views/go-home-view";
+import {AbstractView} from "../utils/abstract-view";
+import {MAX_LIVES, TIME_START_BLINKING} from "../utils/game";
+import GoHomeView from "./go-home-view";
 
 export default class HeaderView extends AbstractView {
   constructor(model) {

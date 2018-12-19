@@ -27,18 +27,16 @@ const KeyCode = {
   RIGHT_ARROW: 39
 };
 
-export const QuestionType = {
-  GUESS_ONE: `guess-one`,
-  GUESS_TWO: `guess-two`,
-  FIND_PAINTING: `find-painting`,
-  FIND_PHOTO: `find-photo`
+export const ImageType = {
+  PAINTING: `painting`,
+  PHOTO: `photo`
 };
 
-export const QuestionTypeToTask = {
-  [QuestionType.GUESS_ONE]: `Угадай, фото или рисунок?`,
-  [QuestionType.GUESS_TWO]: `Угадайте для каждого изображения фото или рисунок?`,
-  [QuestionType.FIND_PAINTING]: `Найдите рисунок среди изображений`,
-  [QuestionType.FIND_PHOTO]: `Найдите фотографию среди изображений`,
+export const QuestionTask = {
+  FIND_PHOTO: `Найдите фото среди изображений`,
+  FIND_PAINTING: `Найдите рисунок среди изображений`,
+  GUESS_TWO: `Угадайте для каждого изображения фото или рисунок?`,
+  GUESS_ONE: `Угадай, фото или рисунок?`
 };
 
 export const ANSWERS_NORMAL_LENGTH = 10;
