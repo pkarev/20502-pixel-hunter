@@ -20,7 +20,7 @@ export default class Application {
 
   static start() {
     Loader.loadData().
-      then((data) => {gameQuestions = data}).
+      then((data) => { gameQuestions = data; }).
       then(() => Application.showIntro())
       .catch(Application.showError);
   }
