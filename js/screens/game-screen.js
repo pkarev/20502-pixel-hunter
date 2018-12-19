@@ -72,24 +72,15 @@ export default class GameScreen {
 
   answer(isCorrect) {
     this.stopGame();
-    switch (isCorrect) {
-      case undefined:
-        this.model.newUndefinedAnswer();
-        break;
-      case true:
-        this.model.newAnswer(isCorrect);
-        break;
-      case false:
-        this.model.newAnswer(isCorrect);
-        if (this.model.lives) {
-          this.model.reduceLives();
-        } else {
-          this.model.loose();
-          Application.showScores(this.model);
-        }
-        break;
-      default:
-        throw new Error(`Wrong answer value`);
+
+    this.model.addNewAnswer(isCorrect);
+
+    if (!isCorrect) {
+      this.model.reduceLives();
+      if (this.model.lives < 0) {
+        Application.showScores(this.model);
+        return;
+      }
     }
 
     if (!this.model.hasNextLevel) {

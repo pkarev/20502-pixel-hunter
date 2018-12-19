@@ -5,6 +5,7 @@ import GameScreen from "./screens/game-screen";
 import ScoresScreen from "./screens/scores-screen";
 import GameModel from "./models/game-model";
 import DataLoadErrorScreen from "./screens/data-load-error-screen";
+import Loader from "./utils/loader";
 
 const main = document.querySelector('#main');
 
@@ -26,9 +27,7 @@ let gameQuestions;
 export default class Application {
 
   static start() {
-    window.fetch(` https://es.dump.academy/pixel-hunter/questions`).
-      then(checkStatus).
-      then((response) => response.json()).
+    Loader.loadData().
       then((data) => gameQuestions = data).
       then((response) => Application.showIntro())
       .catch(Application.showError);
@@ -58,8 +57,14 @@ export default class Application {
 
   static showScores(model) {
     const playerName = model.playerName;
-    const scores = new ScoresScreen(model);
-    renderScreen(scores.element);
+    const answers = model._answers;
+    const lives = model._state.lives;
+    Loader.saveResults({answers, lives}, playerName)
+      .then(() => Loader.loadResults(playerName))
+      .then((data) => {
+        const scores = new ScoresScreen(data);
+        renderScreen(scores.element);
+      });
   }
 
   static showError(error) {

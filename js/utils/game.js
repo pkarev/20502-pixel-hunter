@@ -3,6 +3,7 @@ export const MAX_LEVELS = 10;
 export const TIME_PER_QUESTION = 30;
 export const TIME_START_BLINKING = 5;
 export const ONE_SECOND = 1000;
+export const ANSWERS_NORMAL_LENGTH = 10;
 
 export const INITIAL_GAME_STATE = Object.freeze({
   lives: 3,
@@ -16,15 +17,11 @@ export const AnswerBreakPoint = {
   IS_FAST: 20,
 };
 
-export const AnswerSpeed = {
-  FAST: `fast`,
-  NORMAL: `normal`,
-  SLOW: `slow`
-};
-
-const KeyCode = {
-  LEFT_ARROW: 37,
-  RIGHT_ARROW: 39
+export const AnswerType = {
+  CORRECT: `correct`,
+  WRONG: `wrong`,
+  SLOW: `slow`,
+  FAST: `fast`
 };
 
 export const ImageType = {
@@ -39,27 +36,11 @@ export const QuestionTask = {
   GUESS_ONE: `Угадай, фото или рисунок?`
 };
 
-export const ANSWERS_NORMAL_LENGTH = 10;
-
 export const PointsPer = {
   LIVE_LEFT: 50,
   CORRECT_ANSWER: 100,
   FAST_ANSWER: 50,
   SLOW_ANSWER: -50
-};
-
-export const isLeftArrowKeyup = (evt, action) => {
-  if (evt.keyCode !== KeyCode.LEFT_ARROW) {
-    return;
-  }
-  action();
-};
-
-export const isRightArrowKeyup = (evt, action) => {
-  if (evt.keyCode !== KeyCode.RIGHT_ARROW) {
-    return;
-  }
-  action();
 };
 
 export const validateFields = (formFields) => {
@@ -83,14 +64,14 @@ export const calculateGamePoints = (answers, livesLeft) => {
   }
 
   for (const answer of answers) {
-    if (answer.isCorrect) {
+    if (answer === AnswerType.CORRECT) {
       points += PointsPer.CORRECT_ANSWER;
     }
-    if (answer.speed === AnswerSpeed.FAST) {
-      points += PointsPer.FAST_ANSWER;
+    if (answer === AnswerType.FAST) {
+      points += PointsPer.FAST_ANSWER + PointsPer.CORRECT_ANSWER;
     }
-    if (answer.speed === AnswerSpeed.SLOW) {
-      points += PointsPer.SLOW_ANSWER;
+    if (answer === AnswerType.SLOW) {
+      points += PointsPer.SLOW_ANSWER + PointsPer.CORRECT_ANSWER;
     }
   }
 
@@ -117,10 +98,6 @@ export const changeLives = (gameState, lives) => {
     throw new Error(`New game lives must be a number`);
   }
 
-  if (lives < 0) {
-    throw new Error(`Lives can't be negative. Game over`);
-  }
-
   if (lives > MAX_LIVES) {
     throw new Error(`Lives can't be too many`);
   }
@@ -129,27 +106,7 @@ export const changeLives = (gameState, lives) => {
   return newGameState;
 };
 
-export class Answer {
-  constructor(correctness, time) {
-    this.isCorrect = correctness;
-
-    if (this.isCorrect) {
-      if (time > AnswerBreakPoint.IS_FAST) {
-        this.speed = `fast`;
-      }
-
-      if (time >= AnswerBreakPoint.IS_SLOW && time <= AnswerBreakPoint.IS_FAST) {
-        this.speed = `normal`;
-      }
-
-      if (time < AnswerBreakPoint.IS_SLOW) {
-        this.speed = `slow`;
-      }
-    }
-  }
-}
-
-export class Timer {
+export default class Timer {
   constructor(time) {
     if (typeof time !== `number`) {
       throw new Error(`Initial time must be a number`);

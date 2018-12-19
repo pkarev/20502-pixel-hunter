@@ -1,4 +1,4 @@
-import {AbstractView} from "../utils/abstract-view";
+import AbstractView from "../utils/abstract-view";
 import {MAX_LIVES, TIME_START_BLINKING} from "../utils/game";
 import GoHomeView from "./go-home-view";
 

@@ -1,4 +1,4 @@
-import {AbstractView} from "../utils/abstract-view";
+import AbstractView from "../utils/abstract-view";
 import {ImageType, QuestionTask, validateFields} from "../utils/game";
 import StatsView from "./game-stats-view";
 

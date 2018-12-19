@@ -1,36 +1,18 @@
 import {assert} from 'chai';
+import Timer from "../utils/game";
 import {
-  ANSWERS_NORMAL_LENGTH,
-  AnswerSpeed,
   INITIAL_GAME_STATE,
   calculateGamePoints,
   changeLevel,
   changeLives,
-  Timer
 } from '../utils/game';
-const Answer = function (isCorrect, speed) {
-  this.isCorrect = isCorrect;
-  this.speed = speed;
+
+const TEST_ANSWERS = {
+  ALL_CORRECT: [`correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`, `correct`],
+  ALL_FAST: [`fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`, `fast`],
+  ALL_SLOW: [`slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`],
+  ALL_WRONG: [`wrong`, `wrong`, `wrong`, `wrong`, `wrong`, `wrong`, `wrong`, `wrong`, `wrong`, `wrong`],
 };
-
-const generateMockAnswers = (isCorrect, speed) => {
-  let answers = [];
-  for (let i = 0; i < ANSWERS_NORMAL_LENGTH; i++) {
-    answers.push(new Answer(isCorrect, speed));
-  }
-
-  return answers;
-};
-
-const allCorrectNormal = generateMockAnswers(true, AnswerSpeed.NORMAL);
-const allCorrectFast = generateMockAnswers(true, AnswerSpeed.FAST);
-const allCorrectSlow = generateMockAnswers(true, AnswerSpeed.SLOW);
-const allIncorrectNormal = generateMockAnswers(false, AnswerSpeed.NORMAL);
-const allIncorrectFast = generateMockAnswers(false, AnswerSpeed.FAST);
-const allIncorrectSlow = generateMockAnswers(false, AnswerSpeed.SLOW);
-const notEnoughAnswers = new Array(5);
-const emptyAnswers = [];
-const tooManyAnswers = [];
 
 describe(`Change level`, () => {
   it(`should update level of the game`, () => {
@@ -57,10 +39,6 @@ describe(`Change lives`, () => {
     assert.equal(changeLives(INITIAL_GAME_STATE, 1).lives, 1);
     assert.equal(changeLives(INITIAL_GAME_STATE, 2).lives, 2);
     assert.equal(changeLives(INITIAL_GAME_STATE, 3).lives, 3);
-  });
-
-  it(`should no accept negative values`, () => {
-    assert.throws(() => changeLives(INITIAL_GAME_STATE, -1).lives, /Lives can't be negative. Game over/);
   });
 
   it(`should not set lives more than allowed max lives number`, () => {
@@ -106,17 +84,14 @@ describe(`Timer`, () => {
 
 describe(`Calculate game points`, () => {
   it(`should calculate points correct`, () => {
-    assert.equal(calculateGamePoints(allCorrectNormal, 3), 1150);
-    assert.equal(calculateGamePoints(allCorrectFast, 2), 1600);
-    assert.equal(calculateGamePoints(allCorrectSlow, 0), 500);
-    assert.equal(calculateGamePoints(allIncorrectNormal, 1), 50);
-    assert.equal(calculateGamePoints(allIncorrectFast, 0), 500);
-    assert.equal(calculateGamePoints(allIncorrectSlow, 0), -500);
+    assert.equal(calculateGamePoints(TEST_ANSWERS.ALL_CORRECT, 3), 1150);
+    assert.equal(calculateGamePoints(TEST_ANSWERS.ALL_FAST, 2), 1600);
+    assert.equal(calculateGamePoints(TEST_ANSWERS.ALL_SLOW, 0), 500);
+    assert.equal(calculateGamePoints(TEST_ANSWERS.ALL_WRONG, 1), 50);
   });
   it(`Should return -1 if answers length is less than 10`, () => {
-    assert.equal(calculateGamePoints(notEnoughAnswers, 0), -1);
-    assert.equal(calculateGamePoints(emptyAnswers, 0), -1);
-    assert.equal(calculateGamePoints(tooManyAnswers, 0), -1);
+    assert.equal(calculateGamePoints(new Array(5), 0), -1);
+    assert.equal(calculateGamePoints(new Array(13), 0), -1);
   });
 });
 
