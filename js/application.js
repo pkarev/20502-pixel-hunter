@@ -7,19 +7,11 @@ import GameModel from "./models/game-model";
 import DataLoadErrorScreen from "./screens/data-load-error-screen";
 import Loader from "./utils/loader";
 
-const main = document.querySelector('#main');
+const main = document.querySelector(`#main`);
 
 const renderScreen = (contentElement) => {
   main.innerHTML = ``;
   main.appendChild(contentElement);
-};
-
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
 };
 
 let gameQuestions;
@@ -28,8 +20,8 @@ export default class Application {
 
   static start() {
     Loader.loadData().
-      then((data) => gameQuestions = data).
-      then((response) => Application.showIntro())
+      then((data) => {gameQuestions = data}).
+      then(() => Application.showIntro())
       .catch(Application.showError);
   }
 
