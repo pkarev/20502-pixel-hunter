@@ -11,8 +11,10 @@ const getStatsClass = (answer) => {
       return `fast`;
     case (AnswerType.SLOW):
       return `slow`;
+    case (AnswerType.UNKNOWN):
+      return `unknown`;
     default:
-      return `undefined`;
+      return ``;
   }
 };
 
