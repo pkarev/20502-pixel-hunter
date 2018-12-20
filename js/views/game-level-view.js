@@ -6,7 +6,7 @@ export default class LevelView extends AbstractView {
   constructor(model) {
     super();
     this.level = model.currentQuestion;
-    this.answers = model._answers;
+    this.answers = model.answers;
   }
 
   get template() {

@@ -17,7 +17,7 @@ export default class GameModel {
   restart() {
     this._state = Object.assign({}, INITIAL_GAME_STATE);
     this._timer = new Timer(TIME_PER_QUESTION);
-    this._answers = Array.from({length: ANSWERS_NORMAL_LENGTH}, () => `unknown`);
+    this.answers = Array.from({length: ANSWERS_NORMAL_LENGTH}, () => `unknown`);
   }
 
   get currentQuestion() {
@@ -57,7 +57,7 @@ export default class GameModel {
   }
 
   addNewAnswer(isCorrect) {
-    this._answers[this.level] = this.getAnswer(isCorrect);
+    this.answers[this.level] = this.getAnswer(isCorrect);
   }
 
   getAnswer(isCorrect) {

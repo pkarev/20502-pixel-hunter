@@ -46,9 +46,12 @@ export const PointsPer = {
 
 export const validateFields = (formFields) => {
   let isAllFieldsValid = true;
-  formFields.forEach((formField) => {
-    isAllFieldsValid = formField.checkValidity() ? isAllFieldsValid : formField.checkValidity();
-  });
+  for (const field of formFields) {
+    if (!field.checkValidity()) {
+      isAllFieldsValid = false;
+      return isAllFieldsValid;
+    }
+  }
 
   return isAllFieldsValid;
 };
