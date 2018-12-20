@@ -1,6 +1,6 @@
 import AbstractView from "../utils/abstract-view";
 import StatsView from "./game-stats-view";
-import {ANSWERS_NORMAL_LENGTH, AnswerType, calculateGamePoints, PointsPer} from "../utils/game";
+import {AnswerType, calculateGamePoints, PointsPer} from "../utils/game";
 
 const StatsTitle = {
   WIN: `Победа!`,
@@ -8,7 +8,7 @@ const StatsTitle = {
 };
 
 const getStatsTitle = (game) => {
-  if ((game.answers.length = ANSWERS_NORMAL_LENGTH) && (game.lives >= 0)) {
+  if ((game.lives >= 0)) {
     return StatsTitle.WIN;
   }
 

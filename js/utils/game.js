@@ -21,7 +21,8 @@ export const AnswerType = {
   CORRECT: `correct`,
   WRONG: `wrong`,
   SLOW: `slow`,
-  FAST: `fast`
+  FAST: `fast`,
+  UNKNOWN: `unknown`
 };
 
 export const ImageType = {

@@ -129,20 +129,21 @@ export default class LevelView extends AbstractView {
 
   bindTwoImagesQuestion() {
     const answerOptions = Array.from(this.element.querySelectorAll(`input`));
+    let isCorrect = true;
     answerOptions.forEach((option) => {
       option.addEventListener(`change`, (evt) => {
         let isAllOptionsChosen = validateFields(answerOptions);
         const imageType = evt.target.value === `paint` ? ImageType.PAINTING : ImageType.PHOTO;
-        const isCorrect = imageType === this.level.answers[evt.target.dataset.imageIndex].type;
 
-        if (!isCorrect && !isAllOptionsChosen) {
-          this.onAnswer(isCorrect);
+        if (imageType !== this.level.answers[evt.target.dataset.imageIndex].type) {
+          isCorrect = false;
+        }
+
+        if (!isAllOptionsChosen) {
           return;
         }
 
-        if (isAllOptionsChosen) {
-          this.onAnswer(isCorrect);
-        }
+        this.onAnswer(isCorrect);
       });
     });
   }

@@ -1,4 +1,4 @@
-import Timer from "../utils/game";
+import Timer, {ANSWERS_NORMAL_LENGTH} from "../utils/game";
 import {
   INITIAL_GAME_STATE,
   MAX_LEVELS,
@@ -17,7 +17,7 @@ export default class GameModel {
   restart() {
     this._state = Object.assign({}, INITIAL_GAME_STATE);
     this._timer = new Timer(TIME_PER_QUESTION);
-    this._answers = [];
+    this._answers = Array.from({length: ANSWERS_NORMAL_LENGTH}, () => `unknown`);
   }
 
   get currentQuestion() {
@@ -48,10 +48,6 @@ export default class GameModel {
     return this._timer.time;
   }
 
-  loose() {
-    this._state.isWin = false;
-  }
-
   nextLevel() {
     this._state = changeLevel(this._state, this.level + 1);
   }
@@ -61,7 +57,7 @@ export default class GameModel {
   }
 
   addNewAnswer(isCorrect) {
-    this._answers.push(this.getAnswer(isCorrect));
+    this._answers[this.level] = this.getAnswer(isCorrect);
   }
 
   getAnswer(isCorrect) {
