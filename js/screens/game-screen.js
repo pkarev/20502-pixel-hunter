@@ -24,13 +24,13 @@ export default class GameScreen {
   _tick() {
     this.model._timer.tick();
 
-    if (this.model._timer.time === TIME_START_BLINKING) {
+    if (this.model.time === TIME_START_BLINKING) {
       this.updateHeader();
     } else {
       this.updateTime();
     }
 
-    if (this.model._timer.time) {
+    if (this.model.time) {
       this._timer = setTimeout(() => this._tick(), ONE_SECOND);
     } else {
       this.answer(undefined);
@@ -57,7 +57,7 @@ export default class GameScreen {
   }
 
   updateTime() {
-    this.header.element.querySelector(`.game__timer`).textContent = this.model._timer.time;
+    this.header.element.querySelector(`.game__timer`).textContent = this.model.time;
   }
 
   startGame() {

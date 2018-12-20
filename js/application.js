@@ -51,8 +51,8 @@ export default class Application {
 
   static showScores(model) {
     const playerName = model.playerName;
-    const answers = model._answers;
-    const lives = model._state.lives;
+    const answers = model.answers;
+    const lives = model.state.lives;
     Loader.saveResults({answers, lives}, playerName)
       .then(() => Loader.loadResults(playerName))
       .then((data) => {
