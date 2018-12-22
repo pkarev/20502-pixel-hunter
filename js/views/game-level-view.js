@@ -72,16 +72,16 @@ export default class LevelView extends AbstractView {
         ${this.level.answers.map((answer, index) => `
         <div class="game__option">
           <img src="${answer.image.url}" alt="Option ${index + 1}" width="468" height="458">
-        <label class="game__answer game__answer--photo">
-          <input class="visually-hidden" name="question${index + 1}" data-image-index="${index}" type="radio" value="photo" required>
-        <span>Фото</span>
-        </label>
-        <label class="game__answer game__answer--paint">
-          <input class="visually-hidden" name="question${index + 1}" data-image-index="${index}" type="radio" value="paint" required>
-        <span>Рисунок</span>
-        </label>
+          <label class="game__answer game__answer--photo">
+            <input class="visually-hidden" name="question${index + 1}" data-image-index="${index}" type="radio" value="photo" required>
+            <span>Фото</span>
+          </label>
+          <label class="game__answer game__answer--paint">
+            <input class="visually-hidden" name="question${index + 1}" data-image-index="${index}" type="radio" value="paint" required>
+            <span>Рисунок</span>
+          </label>
         </div>
-          `).join(``)}
+        `).join(``)}
       </form>
     `;
   }
@@ -129,21 +129,27 @@ export default class LevelView extends AbstractView {
 
   bindTwoImagesQuestion() {
     const answerOptions = Array.from(this.element.querySelectorAll(`input`));
-    let isCorrect = true;
-    answerOptions.forEach((option) => {
-      option.addEventListener(`change`, (evt) => {
-        let isAllOptionsChosen = validateFields(answerOptions);
-        const imageType = evt.target.value === `paint` ? ImageType.PAINTING : ImageType.PHOTO;
+    const levelQuestions = Array.from(this.element.querySelectorAll(`.game__option`));
+    let isBothOptionsCorrect = true;
 
-        if (imageType !== this.level.answers[evt.target.dataset.imageIndex].type) {
-          isCorrect = false;
-        }
+    answerOptions.forEach((option) => {
+      option.addEventListener(`change`, () => {
+        let isAllOptionsChosen = validateFields(answerOptions);
 
         if (!isAllOptionsChosen) {
           return;
         }
 
-        this.onAnswer(isCorrect);
+        for (const question of levelQuestions) {
+          const imageType = question.querySelector(`input`).checked ? ImageType.PHOTO : ImageType.PAINTING;
+          const isCurrentOptionCorrect = imageType === this.level.answers[levelQuestions.indexOf(question)].type;
+          if (!isCurrentOptionCorrect) {
+            isBothOptionsCorrect = false;
+            break;
+          }
+        }
+
+        this.onAnswer(isBothOptionsCorrect);
       });
     });
   }
